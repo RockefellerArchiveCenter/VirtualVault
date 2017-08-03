@@ -53,26 +53,25 @@
   width:100%;
 }
 
-button, a[type="button"] {
+#asset-controls button, a[type="button"] {
 	background: rgba(0,0,0,0);
 	border: 0;
   font-size: 1.5em;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
-  // height: 2em;
+  height: 2em;
   color: #333;
   float: left;
   padding: 0 1%;
 }
 
-a[type="button"] {
+#asset-controls a[type="button"] {
   margin-top: .5em;
 }
 
 #time {
   font-size: 1em;
-  margin-top: .5em;
 }
 
 .glyphicon {
