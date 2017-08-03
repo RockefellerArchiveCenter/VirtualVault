@@ -25,15 +25,16 @@ $(document).ready(function() {
     var result = index.search(query);
     var record_type = $('#search').attr('data-record-type');
     results.empty();
+    results.append("<table class='table table-striped'><tbody></tbody></table>");
     result.forEach(function(result) {
       search_data.then(function(data) {
         var item = data[result.ref];
         if (item.record_type == record_type) {
-          results.append('<p><a href="'+item.url+'">'+item.title+'</a></p>');
+          results.children('table').children('tbody').append('<tr><td><a href="'+item.url+'">'+item.title+'</a></td></tr>');
         }
       });
     });
-    results.prepend('<p>Found '+$('#results p').length+' result(s) for "'+query+'"</p>');
+    results.prepend('<p>Found '+$('#results td').length+' result(s) for "'+query+'"</p>');
     results.slideDown().fadeIn(200);
     // results.parent('.row').next('div').hide();
   });
