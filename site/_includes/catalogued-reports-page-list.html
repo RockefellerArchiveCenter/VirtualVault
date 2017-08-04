@@ -4,11 +4,17 @@
       <h1 class="text-center">{{page.title}}</h1>
     </div>
     <div class="col-sm-12">
-      <form action="/catalogued-reports" method="get" id="search" style="margin-top:1.5em;" class="form-inline text-center col-xs-12" role="search">
-        <div class="form-group">
-          <input id="query" name="q" type="text" class="form-control" placeholder="Search"></input>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+      <form action="/catalogued-reports" method="get" style="margin-top:1.5em;" role="search">
+        <div class="row">
+          <div class="col-xs-8 col-xs-offset-2">
+            <div class="input-group input-group-lg">
+                <input id="query" type="text" name="q" class="form-control" />
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-primary">Search</button>
+              </div><!-- /btn-group -->
+            </div><!-- /input-group -->
+          </div><!-- /.col-xs-12 -->
+        </div><!-- /.row -->
       </form>
     </div>
   </div>
@@ -24,8 +30,7 @@
 
 <script>
 let store = {
-  {% assign catalogued-reports_data = site.data.catalogued-reports %}
-  {% for item_hash in catalogued-reports_data %}
+  {% for item_hash in site.data.catalogued-reports %}
     {% assign object = item_hash[1] %}
     {% assign id = item_hash[0] %}
     "catalogued-reports/{{id}}": {
