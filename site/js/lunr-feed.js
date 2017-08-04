@@ -29,7 +29,7 @@ function getQueryVariable(variable) {
   }
 }
 
-var searchTerm = getQueryVariable('q');
+let searchTerm = getQueryVariable('q');
 
 if (searchTerm) {
   document.getElementById('query').setAttribute("value", searchTerm);
