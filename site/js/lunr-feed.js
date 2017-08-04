@@ -1,45 +1,55 @@
-// builds lunr
-// (with gratitude to https://github.com/katydecorah/katydecorah.github.io/blob/master/js/lunr-feed.js and http://rayhightower.com/blog/2016/01/04/how-to-make-lunrjs-jekyll-work-together/)
+function displaySearchResults(results, store, query) {
+  let searchResults = document.getElementById('results');
+  let searchResultsStatus = document.getElementById('results-status');
 
-var index = lunr(function () {
-  this.field('title')
-  this.field('url')
-  this.field('record_type')
-  this.field('creator')
-  this.field('subjects')
-  this.ref('href')
-});
+  if (results.length) { // Are there any results?
+    let appendString = '<table class="table table-striped"><tbody>';
 
-var search_data = $.getJSON("/search_data.json");
-search_data.then(function(data) {
-  $.each(data, function(i, value) {
-    index.add(value);
+    for (var i = 0; i < results.length; i++) {  // Iterate over the results
+      let item = store[results[i].ref];
+      console.log(item)
+      appendString += '<tr><td><a href="'+item.url+'">'+item.title+'</a></td></tr>';
+    }
+    appendString += '</tbody></table>'
+    searchResults.innerHTML = appendString;
+  }
+  searchResultsStatus.innerHTML = '<p>Found '+results.length+' result(s) for "'+query+'"</p>', searchResults.children[0];
+}
+
+function getQueryVariable(variable) {
+  let query = window.location.search.substring(1);
+  let vars = query.split('&');
+
+  for (var i = 0; i < vars.length; i++) {
+    let pair = vars[i].split('=');
+
+    if (pair[0] === variable) {
+      return decodeURIComponent(pair[1].replace(/\+/g, '%20'));
+    }
+  }
+}
+
+var searchTerm = getQueryVariable('q');
+
+if (searchTerm) {
+  document.getElementById('query').setAttribute("value", searchTerm);
+
+  let index = lunr(function () { // Initalize lunr
+    this.field('id');
+    this.field('title');
+    this.field('url');
+    this.field('record_type');
   });
-});
 
-$(document).ready(function() {
-  $('#search').submit(function(event) {
-    event.preventDefault();
-    var results = $('#results');
-    var query = $('#query').val();
-    var result = index.search(query);
-    var record_type = $('#search').attr('data-record-type');
-    results.empty();
-    results.append("<table class='table table-striped'><tbody></tbody></table>");
-    result.forEach(function(result) {
-      search_data.then(function(data) {
-        var item = data[result.ref];
-        if (item.record_type == record_type) {
-          results.children('table').children('tbody').append('<tr><td><a href="'+item.url+'">'+item.title+'</a></td></tr>');
-        }
-      });
+  for (key in store) { // Add the data to lunr
+    index.add({
+      'id': key,
+      'title': store[key].title,
+      'url': store[key].url,
+      'record_type': store[key].record_type
     });
-    results.prepend('<p>Found '+$('#results td').length+' result(s) for "'+query+'"</p>');
-    results.slideDown().fadeIn(200);
-    // results.parent('.row').next('div').hide();
-  });
-  $('#results').on('click', 'button.close', function(){
-    $('#results').slideUp().fadeOut(200);
-    $('#query').val('');
-  });
-});
+
+    let results = index.search(searchTerm); // Get lunr to perform a search
+    displaySearchResults(results, store, searchTerm); // We'll write this in the next section
+  }
+}

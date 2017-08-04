@@ -22,13 +22,19 @@ layout: default
         <a class="btn btn-primary" href="{{ site.url }}{{ site.baseurl }}/moving-image">Browse moving images</a>
       </div>
     </div>
-    <!-- <div class="col-sm-6">
+    <div class="col-sm-12">
       <div class="well well-lg">
         <h2>Ford Foundation Catalogued Reports &#128203;</h2>
-        <p>View PDF copies of select Reports from the Ford Foundation.</p>
-        <a class="btn btn-primary" href="{{ site.url }}{{ site.baseurl }}/catalogued-reports">Browse catalogued reports</a>
+        <div class="row">
+          <form action="/catalogued-reports" method="get" style="margin-top:1.5em;" class="form-inline text-center col-xs-12" role="search" data-record-type="catalogued-reports">
+            <div class="form-group">
+              <input name="q" type="text" class="form-control" placeholder="Search"></input>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
       </div>
-    </div> -->
+    </div>
     <!-- <div class="col-sm-6">
       <div class="well well-lg">
         <h2>Archival Documents</h2>
