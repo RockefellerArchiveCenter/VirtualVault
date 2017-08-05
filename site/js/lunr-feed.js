@@ -7,7 +7,6 @@ function displaySearchResults(results, store, query) {
 
     for (var i = 0; i < results.length; i++) {  // Iterate over the results
       let item = store[results[i].ref];
-      console.log(item)
       appendString += '<tr><td><a href="'+item.url+'">'+item.title+'</a></td></tr>';
     }
     appendString += '</tbody></table>'
@@ -32,6 +31,7 @@ function getQueryVariable(variable) {
 let searchTerm = getQueryVariable('q');
 
 if (searchTerm) {
+  document.getElementById('results').innerHTML = '<img class="center-block" src="/img/loading.gif" />'
   document.getElementById('query').setAttribute("value", searchTerm);
 
   let index = lunr(function () { // Initalize lunr
