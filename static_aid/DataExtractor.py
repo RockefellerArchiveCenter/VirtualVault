@@ -39,7 +39,7 @@ class DataExtractor(object):
         logging.info('*** Export started ***')
 
         exportStartTime = int(time())
-        self.removeDataDir()
+        # self.removeDataDir()
         self._run()
         self.updateLastExportTime(exportStartTime)
 
