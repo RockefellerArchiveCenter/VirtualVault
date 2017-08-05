@@ -1,33 +1,44 @@
-<div id="list" class="col-sm-8 col-sm-offset-2">
-  <div class="col-sm-7"><h1>{{page.title}}</h1></div>
-  <div class="col-sm-5">
-    <input style="margin-top:1.5em;" type="text" class="form-control search" placeholder="Search by keyword or report number" />
+<div id="catalogued-reports-list" class="col-sm-8 col-sm-offset-2">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1 class="text-center">{{page.title}}</h1>
+    </div>
+    <div class="col-sm-12">
+      <form action="/catalogued-reports" method="get" style="margin-top:1.5em;" role="search">
+        <div class="row">
+          <div class="col-xs-8 col-xs-offset-2">
+            <div class="input-group input-group-lg">
+                <input id="query" type="text" name="q" class="form-control" placeholder="Enter a report title or number"/>
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-primary">Search</button>
+              </div><!-- /btn-group -->
+            </div><!-- /input-group -->
+          </div><!-- /.col-xs-12 -->
+        </div><!-- /.row -->
+      </form>
+    </div>
   </div>
-  {% if list_data %}
-  <table class="table table-striped" style="opacity:0;">
-    <tbody class="list">
-    {% for item_hash in list_data %}
-      {% assign item = item_hash[1] %}
-      {% assign id = item_hash[0] %}
-      {% assign instances = item.instances %}
-      {% capture description %}
-        {% for note in item.notes %}
-          {% if note.type == 'abstract' %}
-            {{note.subnotes[0].content}}
-          {% elsif note.type == 'scopecontent' %}
-            {{note.subnotes[0].content}}
-          {% elsif note.type == 'bioghist' %}
-            {{note.subnotes[0].content}}
-          {% endif %}
-        {% endfor %}
-      {% endcapture %}
-        <tr>
-          <td><a href="{{ site.url }}{{ site.baseurl }}{{ id }}"><span class="title">{{ item.title }}</span></a> <small><span class="av-number">{% include avnumber.html %}</span></small></td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  {% else %}
-    <h4>There is nothing here...yet!</h4>
-  {% endif %}
+  <div class="row">
+    <div class="col-sm-12">
+      <div id="results-status"></div>
+      <div id="results">
+      </div>
+    </div>
+  </div>
 </div>
+
+
+<script>
+let store = {
+  {% for item_hash in site.data.catalogued-reports %}
+    {% assign object = item_hash[1] %}
+    {% assign id = item_hash[0] %}
+    "catalogued-reports/{{id}}": {
+      "href": "catalogued-reports/{{id}}",
+      "title": "{{object.title | escape | strip_newlines | remove: '\'}}",
+      "url": "{{site.url}}/catalogued-reports/{{id}}",
+      "record_type": "catalogued-reports"
+    }{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+}
+</script>

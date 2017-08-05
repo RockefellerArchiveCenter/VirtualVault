@@ -22,19 +22,26 @@ layout: default
         <a class="btn btn-primary" href="{{ site.url }}{{ site.baseurl }}/moving-image">Browse moving images</a>
       </div>
     </div>
-    <!-- <div class="col-sm-6">
+    <div class="col-sm-12">
       <div class="well well-lg">
-        <h2>Ford Foundation Catalogued Reports &#128203;</h2>
-        <p>View PDF copies of select Reports from the Ford Foundation.</p>
-        <a class="btn btn-primary" href="{{ site.url }}{{ site.baseurl }}/catalogued-reports">Browse catalogued reports</a>
+        <h2 class="text-center">Ford Foundation Catalogued Reports &#128203;</h2>
+          <div class="row">
+            <form action="/catalogued-reports" method="get" style="margin-top:1.5em;" role="search">
+              <div class="row">
+                <div class="col-xs-8 col-xs-offset-2">
+                  <div class="input-group input-group-lg">
+                      <input id="query" type="text" name="q" class="form-control" placeholder="Enter a report title or number"/>
+                    <div class="input-group-btn">
+                      <button type="submit" class="btn btn-primary">Search</button>
+                    </div><!-- /btn-group -->
+                  </div><!-- /input-group -->
+                </div><!-- /.col-xs-12 -->
+              </div><!-- /.row -->
+            </form>
+          </div>
+        </div>
       </div>
-    </div> -->
-    <!-- <div class="col-sm-6">
-      <div class="well well-lg">
-        <h2>Archival Documents</h2>
-        <img alt="Under Construction" src="{{ site.url }}{{ site.baseurl }}/img/under-construction.gif" />
-      </div>
-    </div> -->
+    </div>
     <div class="col-sm-12">
       <p>The digitized content provided through this portal is intended for education and research purposes. The current copyright status of these materials has been described, to the best of our knowledge, in the associated archival descriptions. It is the user’s responsibility to abide by all applicable provisions of the United States copyright law.</p>
     </div>

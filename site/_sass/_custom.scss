@@ -7,10 +7,6 @@
   min-height: 21em;
 }
 
-.well .btn {
-  margin-top: 1.5rem;
-}
-
 .well > p {
   min-height: 4rem;
 }
@@ -53,7 +49,7 @@
   width:100%;
 }
 
-button, a[type="button"] {
+#asset-controls button, a[type="button"] {
 	background: rgba(0,0,0,0);
 	border: 0;
   font-size: 1.5em;
@@ -66,13 +62,12 @@ button, a[type="button"] {
   padding: 0 1%;
 }
 
-a[type="button"] {
+#asset-controls a[type="button"] {
   margin-top: .5em;
 }
 
 #time {
   font-size: 1em;
-  margin-top: .5em;
 }
 
 .glyphicon {
