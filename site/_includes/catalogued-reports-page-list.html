@@ -34,7 +34,6 @@ let store = {
     {% assign object = item_hash[1] %}
     {% assign id = item_hash[0] %}
     "catalogued-reports/{{id}}": {
-      "href": "catalogued-reports/{{id}}",
       "title": "{{object.title | escape | strip_newlines | remove: '\'}}",
       "url": "{{site.url}}/catalogued-reports/{{id}}"
     }{% unless forloop.last %},{% endunless %}

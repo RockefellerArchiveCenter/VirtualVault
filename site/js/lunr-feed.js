@@ -38,7 +38,6 @@ if (searchTerm) {
     this.field('id');
     this.field('title');
     this.field('url');
-    this.field('record_type');
   });
 
   for (key in store) { // Add the data to lunr
@@ -46,7 +45,6 @@ if (searchTerm) {
       'id': key,
       'title': store[key].title,
       'url': store[key].url,
-      'record_type': store[key].record_type
     });
 
     let results = index.search(searchTerm); // Get lunr to perform a search
