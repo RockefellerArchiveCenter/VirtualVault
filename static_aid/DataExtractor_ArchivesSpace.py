@@ -19,7 +19,6 @@ class DataExtractor_ArchivesSpace(DataExtractor):
             id_list = self.getIdList(directory)
             if len(id_list) > 0:
                 for ref_id in set(updated_list) & set(id_list):
-                    logging.info(set(updated_list) & set(id_list))
                     self.findObjectById(directory, ref_id, headers)
                     id_list.remove(ref_id)
                 self.getNewObjects(directory, id_list, headers)
@@ -110,7 +109,7 @@ class DataExtractor_ArchivesSpace(DataExtractor):
 
     # gets a list of filenames without extensions
     def getIdList(self, directory):
-        logging.info('*** Getting a list of all filenames without extensions ***')
+        logging.info('*** Getting a list of all filenames without extensions in '+directory+'***')
         id_list = []
         for dirpath, dirnames, filenames in os.walk('%s/%s' % (config.assets['src'], directory)):
             for filename in [f for f in filenames if not f.startswith('.')]:
@@ -150,8 +149,8 @@ class DataExtractor_ArchivesSpace(DataExtractor):
 
     # gets JSON for newly added assets
     def getNewObjects(self, directory, id_list, headers):
+        logging.info("**** Getting data for newly added assets ***")
         for objectId in id_list:
-            logging.info(os.path.join(config.STAGING_DIR, '_data', directory, objectId+'.json'))
             if not(os.path.isfile(os.path.join(config.STAGING_DIR, '_data', directory, objectId+'.json'))):
                 self.findObjectById(directory, objectId, headers)
 
