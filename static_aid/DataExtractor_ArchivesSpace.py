@@ -18,10 +18,13 @@ class DataExtractor_ArchivesSpace(DataExtractor):
         for directory in os.listdir(config.assets['src']):
             id_list = self.getIdList(directory)
             if len(id_list) > 0:
+                self.getNewObjects(directory, id_list, headers)
+            if len(set(updated_list) & set(id_list)) > 0:
+                logging.info("Exporting updated objects")
                 for ref_id in set(updated_list) & set(id_list):
                     self.findObjectById(directory, ref_id, headers)
                     id_list.remove(ref_id)
-                self.getNewObjects(directory, id_list, headers)
+
         # self.findResources(lastExport, headers)
         # self.findObjects(lastExport, headers)
         # self.findAgents(lastExport, headers)
@@ -60,7 +63,6 @@ class DataExtractor_ArchivesSpace(DataExtractor):
             logging.info('*** Getting a list of resources modified since %d ***', lastExport)
         else:
             logging.info('*** Getting a list of all resources ***')
-
         url = '%s/resources?all_ids=true&modified_since=%d' % (config.archivesSpace['repository_url'], lastExport)
         resourceIds = requests.get(url, headers=headers)
         for resourceId in resourceIds.json():
@@ -128,7 +130,6 @@ class DataExtractor_ArchivesSpace(DataExtractor):
             url = '%s/archival_objects/%s' % (config.archivesSpace['repository_url'], str(objectId))
             archival_object = requests.get(url, headers=headers).json()
             if (archival_object["ref_id"] in id_list):
-                logging.info("exporting updated object "+objectId)
                 if archival_object["publish"]:
                     self.saveFile(objectId, archival_object, config.destinations[directory])
                 else:
@@ -153,7 +154,7 @@ class DataExtractor_ArchivesSpace(DataExtractor):
 
     # gets JSON for newly added assets
     def getNewObjects(self, directory, id_list, headers):
-        logging.info("**** Getting data for newly added assets ***")
+        logging.info("**** Getting data for newly added assets in "+directory+" ***")
         for objectId in id_list:
             if not(os.path.isfile(os.path.join(config.DATA_DIR, directory, objectId+'.json'))):
                 self.findObjectById(directory, objectId, headers)
@@ -166,6 +167,7 @@ class DataExtractor_ArchivesSpace(DataExtractor):
             result_url = '%s%s' % (config.archivesSpace['base_url'], result['ref'])
             archival_object = requests.get(result_url, headers=headers).json()
             if archival_object["publish"]:
+                logging.info("Exporting "+objectId)
                 self.saveFile(objectId, archival_object, config.destinations[directory])
             else:
                 self.removeFile(objectId, config.destinations[directory])
