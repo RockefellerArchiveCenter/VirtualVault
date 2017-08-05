@@ -128,7 +128,11 @@ class DataExtractor_ArchivesSpace(DataExtractor):
             url = '%s/archival_objects/%s' % (config.archivesSpace['repository_url'], str(objectId))
             archival_object = requests.get(url, headers=headers).json()
             if (archival_object["ref_id"] in id_list):
-                self.saveFile(objectId, archival_object, config.destinations[directory])
+                logging.info("exporting updated object "+objectId)
+                if archival_object["publish"]:
+                    self.saveFile(objectId, archival_object, config.destinations[directory])
+                else:
+                    self.removeFile(objectId, config.destinations[directory])
                 id_list.remove(archival_object["ref_id"])
         return id_list
 
@@ -151,7 +155,7 @@ class DataExtractor_ArchivesSpace(DataExtractor):
     def getNewObjects(self, directory, id_list, headers):
         logging.info("**** Getting data for newly added assets ***")
         for objectId in id_list:
-            if not(os.path.isfile(os.path.join(config.STAGING_DIR, '_data', directory, objectId+'.json'))):
+            if not(os.path.isfile(os.path.join(config.DATA_DIR, directory, objectId+'.json'))):
                 self.findObjectById(directory, objectId, headers)
 
     # Gets JSON for an object by ref_id
