@@ -21,3 +21,5 @@ _config.yml
 .pydevproject
 
 site/assets/
+
+search_index.json
