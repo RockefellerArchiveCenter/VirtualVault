@@ -27,6 +27,11 @@ module.exports = function(grunt) {
         command: 'static-aid-link-assets',
         stdout: true,
         stderr: true
+      },
+      createIndex: {
+        command: "node site/js/create-index.js",
+        stdout: true,
+        stderr: true
       }
     },
     jekyll: {
@@ -62,7 +67,7 @@ module.exports = function(grunt) {
   }
 
   grunt.registerTask('serve', ['jekyll:serve']);
-  grunt.registerTask('build', ['exec:makePages_' + pageType, 'jekyll:build', 'exec:linkAssets']);
-  grunt.registerTask('update', ['exec:updateJSON', 'exec:makePages_' + pageType, 'jekyll:build', 'exec:linkAssets']);
-  grunt.registerTask('rebuild', ['exec:replaceJSON', 'exec:makePages_' + pageType, 'jekyll:build', 'exec:linkAssets']);
+  grunt.registerTask('build', ['exec:makePages_' + pageType, 'jekyll:build', 'exec:linkAssets', 'exec:createIndex']);
+  grunt.registerTask('update', ['exec:updateJSON', 'exec:makePages_' + pageType, 'jekyll:build', 'exec:linkAssets', 'exec:createIndex']);
+  grunt.registerTask('rebuild', ['exec:replaceJSON', 'exec:makePages_' + pageType, 'jekyll:build', 'exec:linkAssets', 'exec:createIndex']);
 };

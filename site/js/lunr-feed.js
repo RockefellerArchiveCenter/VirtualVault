@@ -1,18 +1,18 @@
-function displaySearchResults(results, store, query) {
-  let searchResults = document.getElementById('results');
-  let searchResultsStatus = document.getElementById('results-status');
-
+function displaySearchResults(results, query) {
+  $('#results').empty().hide();
   if (results.length) { // Are there any results?
     let appendString = '<table class="table table-striped"><tbody>';
 
-    for (var i = 0; i < results.length; i++) {  // Iterate over the results
-      let item = store[results[i].ref];
-      appendString += '<tr><td><a href="'+item.url+'">'+item.title+'</a></td></tr>';
-    }
-    appendString += '</tbody></table>'
-    searchResults.innerHTML = appendString;
+    $.getJSON("/search_data.json", function(documents){
+      for (r in results) {  // Iterate over the results
+        let item = documents[results[r].ref];
+        appendString += '<tr><td><a href="'+item.url+'">'+item.title+'</a></td></tr>';
+      }
+      appendString += '</tbody></table>'
+      $('#results').append(appendString).fadeIn(200);
+    });
   }
-  searchResultsStatus.innerHTML = '<p>Found '+results.length+' result(s) for "'+query+'"</p>', searchResults.children[0];
+  $('#results-status').append('<p>Found '+results.length+' result(s) for "'+query+'"</p>');
 }
 
 function getQueryVariable(variable) {
@@ -31,23 +31,15 @@ function getQueryVariable(variable) {
 let searchTerm = getQueryVariable('q');
 
 if (searchTerm) {
-  document.getElementById('results').innerHTML = '<img class="center-block" src="/img/loading.gif" />'
-  document.getElementById('query').setAttribute("value", searchTerm);
+  $('#results').append('<img class="center-block" src="/img/loading.gif" />')
+  $('#query').attr("value", searchTerm);
 
-  let index = lunr(function () { // Initalize lunr
-    this.field('id');
-    this.field('title');
-    this.field('url');
-  });
-
-  for (key in store) { // Add the data to lunr
-    index.add({
-      'id': key,
-      'title': store[key].title,
-      'url': store[key].url,
-    });
+  $.getJSON("/search_index.json", function(data){
+    let index = lunr.Index.load(data)
 
     let results = index.search(searchTerm); // Get lunr to perform a search
-    displaySearchResults(results, store, searchTerm); // We'll write this in the next section
-  }
+    displaySearchResults(results, searchTerm);
+
+  });
+
 }
