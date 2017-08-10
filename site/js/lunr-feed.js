@@ -12,7 +12,7 @@ function displaySearchResults(results, query) {
       $('#results').append(appendString).fadeIn(200);
     });
   }
-  $('#results-status').append('<p>Found '+results.length+' result(s) for "'+query+'"</p>');
+  $('#results').prepend('<p>Found '+results.length+' result(s) for "'+query+'"</p>');
 }
 
 function getQueryVariable(variable) {
