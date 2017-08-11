@@ -15,7 +15,10 @@ layout: default
   <div class="row">
     <div class="col-md-12">
       {% include av-scopecontent.html %}
-      <a href="{{ site.url }}{{ site.baseurl }}/assets/catalogued-reports/{{ object_id }}/{{ object_id }}.pdf" class="btn btn-primary btn-lg">View PDF</a>
+      <object class="catalogued-reports" data="{{ site.url }}{{ site.baseurl }}/assets/catalogued-reports/{{ object_id }}/{{ object_id }}.pdf" type="application/pdf">
+        alt : <a href="data/test.pdf">test.pdf</a>
+      </object>
+      <a href="{{ site.url }}{{ site.baseurl }}/assets/catalogued-reports/{{ object_id }}/{{ object_id }}.pdf" class="btn btn-primary btn-lg" download>Download PDF</a>
     </div>
 
 
