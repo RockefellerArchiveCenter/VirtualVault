@@ -6,8 +6,7 @@ window.onload = function() {
 	if(asset) {
 
 		// Asset data
-		var assetType = asset.getAttribute('data-type');
-		var assetTitle = document.getElementById('asset-title');
+		var assetTitle = document.getElementById('asset-title').innerText.trim() || document.getElementById('asset-title').textContent.trim();
 		var assetSource = asset.children[0].getAttribute('src');
 		var assetType = assetSource.split('.').pop().toUpperCase();
 		// get and assign asset size and file type to HTML elements
