@@ -36,7 +36,7 @@ if (searchTerm) {
 
   ga('send', 'event', 'catalogued-reports', 'search', searchTerm);
 
-  $.getJSON("/search_index.json", function(data){
+  $.getJSON("/search_data.json", function(data){
     let index = lunr.Index.load(data)
 
     let results = index.search(searchTerm); // Get lunr to perform a search
