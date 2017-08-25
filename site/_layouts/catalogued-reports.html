@@ -18,7 +18,7 @@ layout: default
       <object class="catalogued-reports" data="{{ site.url }}{{ site.baseurl }}/assets/catalogued-reports/{{ object_id }}/{{ object_id }}.pdf" type="application/pdf">
         alt : <a href="{{ site.url }}{{ site.baseurl }}/assets/catalogued-reports/{{ object_id }}/{{ object_id }}.pdf">{{ object_id }}.pdf</a>
       </object>
-      <a href="{{ site.url }}{{ site.baseurl }}/assets/catalogued-reports/{{ object_id }}/{{ object_id }}.pdf" class="btn btn-primary btn-lg" onclick="ga('send', 'event', 'catalogued-reports', 'download', '{{object.title}})'" download>Download PDF</a>
+      <a id="download-button" href="{{ site.url }}{{ site.baseurl }}/assets/catalogued-reports/{{ object_id }}/{{ object_id }}.pdf" class="btn btn-primary btn-lg" download>Download PDF</a>
     </div>
 
 
@@ -26,3 +26,9 @@ layout: default
 </div>
 
 {% include note-to-users.html %}
+
+<script>
+document.getElementById('download-button').addEventListener("click", function() {
+  ga('send', 'event', 'catalogued-reports', 'download', '{{object.title}}');
+});
+</script>
