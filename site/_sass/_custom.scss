@@ -42,61 +42,8 @@
   font-size: 3rem;
 }
 
-#asset-controls {
-	background: #f8f8f8;
-  border: 1px solid #e7e7e7;
-  height: 3em;
-  width:100%;
-}
-
-#asset-controls button, a[type="button"] {
-	background: rgba(0,0,0,0);
-	border: 0;
-  font-size: 1.5em;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-  height: 2em;
-  color: #333;
-  float: left;
-  padding: 0 1%;
-}
-
-#asset-controls a[type="button"] {
-  margin-top: .5em;
-}
-
-#time {
-  font-size: 1em;
-}
-
 .glyphicon {
   top: 0px;
-}
-
-button:hover {
-	cursor: pointer;
-}
-
-#seek-bar {
-	width: 25%;
-  float: left;
-  margin: 0 1% 0 1%;
-  height:3em;
-}
-
-#volume-bar {
-	width: 15%;
-  float:left;
-  margin: 0 1% 0 1%;
-  height:3em;
-}
-
-video.background {
-  background: transparent url(/img/loading.gif) no-repeat 50% 50%;
-  -webkit-background-size: 100px;
-  -moz-background-size: 100px;
-  background-size: 100px;
 }
 
 .avnumber {
