@@ -48,7 +48,15 @@ window.onload = function() {
 			ga('send', 'event', assetType, 'download', assetTitle);
 		});
 
-		asset.addEventListener("fullscreenchange", function( event ) {
+		window.addEventListener("fullscreenchange", function( event ) {
+			ga('send', 'event', assetType, 'full screen', assetTitle);
+		});
+
+		window.addEventListener("webkitfullscreenchange", function( event ) {
+			ga('send', 'event', assetType, 'full screen', assetTitle);
+		});
+
+		window.addEventListener("mozfullscreenchange", function( event ) {
 			ga('send', 'event', assetType, 'full screen', assetTitle);
 		});
 	}
