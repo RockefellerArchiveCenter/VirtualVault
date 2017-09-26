@@ -3,7 +3,7 @@ function displaySearchResults(results, query) {
   if (results.length) { // Are there any results?
     let appendString = '<table class="table table-striped"><tbody>';
 
-    $.getJSON("/search_data.json", function(documents){
+    $.getJSON("/"+searchType+"_search_data.json", function(documents){
       for (r in results) {  // Iterate over the results
         let item = documents[results[r].ref];
         appendString += '<tr><td><a href="'+item.url+'" onclick="ga(\'send\', \'event\', \'catalogued-reports\', \'view\', \''+item.title+'\');">'+item.title+'</a></td></tr>';
@@ -29,6 +29,7 @@ function getQueryVariable(variable) {
 }
 
 let searchTerm = getQueryVariable('q');
+let searchType = $('form').attr('action').substring(1);
 
 if (searchTerm) {
   $('#results').append('<img class="center-block" src="/img/loading.gif" />')
@@ -36,7 +37,7 @@ if (searchTerm) {
 
   ga('send', 'event', 'catalogued-reports', 'search', searchTerm);
 
-  $.getJSON("/search_index.json", function(data){
+  $.getJSON("/"+searchType+"_search_index.json", function(data){
     let index = lunr.Index.load(data)
 
     let results = index.search(searchTerm); // Get lunr to perform a search
