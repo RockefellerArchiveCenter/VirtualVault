@@ -9,10 +9,10 @@ function displaySearchResults(results, query) {
         appendString += '<tr><td><a href="'+item.url+'" onclick="ga(\'send\', \'event\', \'catalogued-reports\', \'view\', \''+item.title+'\');">'+item.title+'</a></td></tr>';
       }
       appendString += '</tbody></table>'
-      $('#results').append(appendString).fadeIn(200);
+      $('#results').append(appendString);
     });
   }
-  $('#results').prepend('<p>Found '+results.length+' result(s) for "'+query+'"</p>');
+  $('#results').prepend('<p><span class="badge">'+results.length+'</span> result(s) for <span class="badge">'+query+'</span></p>').fadeIn(200);
 }
 
 function getQueryVariable(variable) {
@@ -32,7 +32,7 @@ let searchTerm = getQueryVariable('q');
 let searchType = $('form').attr('action').substring(1);
 
 if (searchTerm) {
-  $('#results').append('<img class="center-block" src="/img/loading.gif" />')
+  $('#results').empty().append('<img class="center-block" src="/img/loading.gif" />')
   $('#query').attr("value", searchTerm);
 
   ga('send', 'event', 'catalogued-reports', 'search', searchTerm);
