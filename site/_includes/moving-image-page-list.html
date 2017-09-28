@@ -1,15 +1,15 @@
-<div id="catalogued-reports-list">
+<div id="moving-image-list">
   <div class="row">
     <div class="col-sm-12">
       <h1 class="text-center">{{page.title}}</h1>
     </div>
     <div class="col-sm-8 col-sm-offset-2">
-      {% include search.html type='catalogued-reports' placeholder='Enter a report title or six-digit report number' %}
+      {% include search.html type='moving-image' placeholder='Enter a moving image title or AV number' %}
     </div>
   </div>
   <div class="row">
     <div class="col-sm-12">
-      <div id="results"></div>
+      <div id="results">{% include av-page-list.html %}</div>
     </div>
   </div>
 </div>

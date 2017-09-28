@@ -1,0 +1,14 @@
+---
+layout: null
+---
+{
+  {% for item_hash in site.data.moving-image %}
+    {% assign object = item_hash[1] %}
+    {% assign id = item_hash[0] %}
+    "moving-image/{{id}}": {
+      "href": "moving-image/{{id}}",
+      "title": "{{object.title | escape | strip_newlines | remove: '\'}}",
+      "url": "{{site.url}}/moving-image/{{id}}"
+    }{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+}
