@@ -1,7 +1,7 @@
 function displaySearchResults(results, query) {
   $('#results').empty().hide();
   if (results.length) { // Are there any results?
-    let appendString = '<table class="table table-striped"><tbody>';
+    var appendString = '<table class="table table-striped"><tbody>'
 
     $.getJSON("/"+searchType+"_search_data.json", function(documents){
       for (r in results) {  // Iterate over the results
