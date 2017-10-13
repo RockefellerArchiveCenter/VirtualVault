@@ -17,6 +17,7 @@ function buildIndex(iterator) {
       var idx = lunr(function() {
           this.ref('href')
           this.field('title')
+          this.field('avnumber')
           this.field('url')
 
           for (doc in documents) {

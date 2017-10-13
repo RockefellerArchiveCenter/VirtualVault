@@ -8,6 +8,7 @@ layout: null
     "catalogued-reports/{{id}}": {
       "href": "catalogued-reports/{{id}}",
       "title": "{{object.title | escape | strip_newlines | remove: '\'}}",
+      "avnumber": "",
       "url": "{{site.url}}/catalogued-reports/{{id}}"
     }{% unless forloop.last %},{% endunless %}
   {% endfor %}

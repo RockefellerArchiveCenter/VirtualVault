@@ -6,7 +6,7 @@ function displaySearchResults(results, query) {
     $.getJSON("/"+searchType+"_search_data.json", function(documents){
       for (r in results) {  // Iterate over the results
         let item = documents[results[r].ref];
-        appendString += '<tr><td><a href="'+item.url+'" onclick="ga(\'send\', \'event\', \'catalogued-reports\', \'view\', \''+item.title+'\');">'+item.title+'</a></td></tr>';
+        appendString += '<tr><td><a href="'+item.url+'" onclick="ga(\'send\', \'event\', \'catalogued-reports\', \'view\', \''+item.title+'\');">'+item.title+'</a> <small>'+item.avnumber+'</small></td></tr>';
       }
       appendString += '</tbody></table>'
       $('#results').append(appendString);
