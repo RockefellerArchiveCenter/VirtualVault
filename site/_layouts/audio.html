@@ -6,7 +6,7 @@ layout: default
 {% assign breadcrumbs = site.data.breadcrumbs[object_id] %}
 {% assign instances = object.instances %}
 
-<div class="col-md-8 col-md-offset-2">
+<div class="col-md-8 offset-md-2">
 
   <h1 id="asset-title" class="collection title">
     {{ object.title }}
@@ -14,9 +14,10 @@ layout: default
       {% include avnumber.html %}
     </small>
   </h1>
+  {% include av-scopecontent.html %}
 
   <div class="row">
-    <div class="col-md-6" style="margin-top:1.8em;">
+    <div class="col-md-6 mt-5">
       <audio id="asset" data-type="audio" width="100%" class="mejs__player">
         <source src="{{ site.url }}{{ site.baseurl }}/assets/audio/{{ object_id }}/{{ object_id }}.mp3" type="audio/mp3">
         <p>
@@ -28,8 +29,7 @@ layout: default
       <a class="btn btn-sm btn-primary pull-right" href="{{ site.url }}{{ site.baseurl }}/assets/audio/{{ object_id }}/{{ object_id }}.mp3" id="download" download>Download MP3</a>
     </div>
 
-    <div class="col-md-5 col-md-offset-1">
-      {% include av-scopecontent.html %}
+    <div class="col-md-5 offset-md-1">
       {% include av-metadata.html %}
     </div>
 

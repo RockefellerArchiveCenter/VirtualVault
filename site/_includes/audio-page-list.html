@@ -1,14 +1,14 @@
 <div id="audio-list">
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col">
       <h1 class="text-center">{{page.title}}</h1>
     </div>
-    <div class="col-sm-8 col-sm-offset-2">
+    <div class="col-sm-8 offset-md-2">
       {% include search.html type='audio' placeholder='Enter an audio title or AV number' %}
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col">
       <div id="results">{% include av-page-list.html %}</div>
     </div>
   </div>
