@@ -3,47 +3,57 @@ layout: default
 ---
 
 <div class="row">
-  <div class="col-md-8 col-md-offset-2">
+  <div class="col-md-8 offset-md-2">
+
     <div class="page-header">
       <h1 class="text-center">{{ site.title }}</h1>
       <h4 class="text-center">{{ site.description }}</h4>
     </div>
-    <div class="col-sm-6">
-      <div class="well well-lg">
-        <h2 class="text-center">Audio 🔊</h2>
-        <div class="row">
-          <div class="col-xs-12">
-            {% include search.html type='audio' placeholder='Enter a title or AV number' %}
+
+    <div class="row mt-4">
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="text-center">Audio 🔊</h2>
+            <div class="text-center">
+              {% include search.html type='audio' placeholder='Enter a title or AV number' %}
+            </div>
           </div>
         </div>
-        <!-- <a class="btn btn-primary" href="{{ site.url }}{{ site.baseurl }}/audio">Browse audio</a> -->
       </div>
-    </div>
-    <div class="col-sm-6">
-      <div class="well well-lg">
-        <h2 class="text-center">Moving Images 📽</h2>
-        <div class="row">
-          <div class="col-xs-12">
-            {% include search.html type='moving-image' placeholder='Enter a title or AV number' %}
-          </div>
-        </div>
-        <!-- <a class="btn btn-primary" href="{{ site.url }}{{ site.baseurl }}/moving-image">Browse moving images</a> -->
-      </div>
-    </div>
-    <div class="col-sm-12">
-      <div class="well well-lg">
-        <h2 class="text-center">Ford Foundation Catalogued Reports 📋</h2>
-        <div class="row">
-          <div class="col-xs-8 col-xs-offset-2">
-            {% include search.html type='catalogued-reports' placeholder='Enter a report title or six-digit report number' %}
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="text-center">Moving Images 📽</h2>
+            <div class="text-center">
+              {% include search.html type='moving-image' placeholder='Enter a title or AV number' %}
+            </div>
+            <!-- <a class="btn btn-primary" href="{{ site.url }}{{ site.baseurl }}/moving-image">Browse moving images</a> -->
           </div>
         </div>
       </div>
     </div>
-    <div class="col-sm-12">
-      <p>The digitized content provided through this portal is intended for education and research purposes. The current copyright status of these materials has been described, to the best of our knowledge, in the associated archival descriptions. It is
-        the user’s responsibility to abide by all applicable provisions of the United States copyright law.</p>
+
+    <div class="row mt-4">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="text-center">Ford Foundation Catalogued Reports 📋</h2>
+            <div class="text-center col-6 offset-3">
+              {% include search.html type='catalogued-reports' placeholder='Enter a report title or six-digit report number' %}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div class="row mt-4">
+      <div class="col-sm-12">
+        <p>The digitized content provided through this portal is intended for education and research purposes. The current copyright status of these materials has been described, to the best of our knowledge, in the associated archival descriptions. It is
+          the user’s responsibility to abide by all applicable provisions of the United States copyright law.</p>
+      </div>
+    </div>
+
   </div>
 </div>
 
