@@ -15,6 +15,7 @@ class DataExtractor_ArchivesSpace(DataExtractor):
         self.makeDestinations()
         headers = self.authenticate()
         updated_list = self.getUpdatedRefIds(lastExport, headers)
+        resource_uris = []
         for directory in os.listdir(config.assets['src']):
             id_list = self.getIdList(directory)
             if len(id_list) > 0:
@@ -24,8 +25,8 @@ class DataExtractor_ArchivesSpace(DataExtractor):
                 for ref_id in set(updated_list) & set(id_list):
                     self.findObjectById(directory, ref_id, headers)
                     id_list.remove(ref_id)
+        self.findResources(resource_uris, headers)
 
-        # self.findResources(lastExport, headers)
         # self.findObjects(lastExport, headers)
         # self.findAgents(lastExport, headers)
         # self.findSubjects(lastExport, headers)
@@ -58,26 +59,16 @@ class DataExtractor_ArchivesSpace(DataExtractor):
 
 
     # Looks for resources
-    def findResources(self, lastExport, headers):
-        if lastExport > 0:
-            logging.info('*** Getting a list of resources modified since %d ***', lastExport)
-        else:
-            logging.info('*** Getting a list of all resources ***')
-        url = '%s/resources?all_ids=true&modified_since=%d' % (config.archivesSpace['repository_url'], lastExport)
-        resourceIds = requests.get(url, headers=headers)
-        for resourceId in resourceIds.json():
-            url = '%s/resources/%s' % (config.archivesSpace['repository_url'], str(resourceId))
-            resource = (requests.get(url, headers=headers)).json()
+    def findResources(self, uri_list, headers):
+        for uri in set(uri_list):
+            resource = (requests.get(uri, headers=headers)).json()
             if resource["publish"]:
                 if not "LI" in resource["id_0"]:
                     self.saveFile(resourceId, resource, config.destinations['collections'])
-                    self.findTree(resourceId, headers)
                 else:
                     pass
             else:
                 self.removeFile(resourceId, config.destinations['collections'])
-                self.removeFile(resourceId, config.destinations['trees'])
-
 
     # Looks for resource trees
     def findTree(self, identifier, headers):
@@ -169,6 +160,7 @@ class DataExtractor_ArchivesSpace(DataExtractor):
             if archival_object["publish"]:
                 logging.info("Exporting "+objectId)
                 self.saveFile(objectId, archival_object, config.destinations[directory])
+                resource_uris.append(archival_object['resource']['ref'])
             else:
                 self.removeFile(objectId, config.destinations[directory])
 
