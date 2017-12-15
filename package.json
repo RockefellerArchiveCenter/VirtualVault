@@ -19,6 +19,7 @@
     "grunt-jekyll": "^0.4.3"
   },
   "dependencies": {
-    "lunr": "^2.1.2"
+    "lunr": "^2.1.2",
+    "npm": "^5.6.0"
   }
 }
