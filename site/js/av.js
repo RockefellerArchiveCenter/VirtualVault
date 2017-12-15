@@ -17,7 +17,7 @@ window.onload = function() {
 			  success: function(msg){
 			    var assetByteSize = getAssetSize.getResponseHeader('Content-Length');
 					var assetSize = getReadableFileSizeString(assetByteSize);
-					document.getElementById('download-details').innerHTML = assetType + '/' + assetSize;
+					document.getElementById('download-details').innerHTML = '(' + assetSize + ')';
 			  }
 			});
 
