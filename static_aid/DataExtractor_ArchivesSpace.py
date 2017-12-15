@@ -81,7 +81,7 @@ class DataExtractor_ArchivesSpace(DataExtractor):
 
     # Looks for archival objects
     def findParents(self, uri_list, headers):
-        for uri in uri_list:
+        for uri in set(uri_list):
             url = '%s%s' % (config.archivesSpace['base_url'], uri)
             archival_object = requests.get(url, headers=headers).json()
             objectId = uri.rsplit('/',1)[1]
