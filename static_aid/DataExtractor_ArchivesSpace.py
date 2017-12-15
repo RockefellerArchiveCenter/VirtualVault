@@ -171,7 +171,8 @@ class DataExtractor_ArchivesSpace(DataExtractor):
                 logging.info("Exporting "+objectId)
                 self.saveFile(objectId, archival_object, config.destinations[directory])
                 resource_uris.append(archival_object['resource']['ref'])
-                parent_uris.append(archival_object['parent']['ref'])
+                if 'parent' in archival_object:
+                    parent_uris.append(archival_object['parent']['ref'])
             else:
                 self.removeFile(objectId, config.destinations[directory])
 
