@@ -8,7 +8,7 @@ layout: null
     {% assign avnumber = object.instances[0].container.indicator_1 %}
     "audio/{{id}}": {
       "href": "audio/{{id}}",
-      "title": "{{object.title | escape | strip_newlines | remove: '\'}}",
+      "title": "{{object.display_string | escape | strip_newlines | remove: '\'}}",
       "avnumber": "{{ avnumber }}",
       "url": "{{site.url}}/audio/{{id}}"
     }{% unless forloop.last %},{% endunless %}
