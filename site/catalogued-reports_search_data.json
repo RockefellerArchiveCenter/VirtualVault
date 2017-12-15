@@ -7,7 +7,7 @@ layout: null
     {% assign id = item_hash[0] %}
     "catalogued-reports/{{id}}": {
       "href": "catalogued-reports/{{id}}",
-      "title": "{{object.title | escape | strip_newlines | remove: '\'}}",
+      "title": "{{object.display_string | escape | strip_newlines | remove: '\'}}",
       "avnumber": "",
       "url": "{{site.url}}/catalogued-reports/{{id}}"
     }{% unless forloop.last %},{% endunless %}
