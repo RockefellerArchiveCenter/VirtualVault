@@ -19,11 +19,11 @@ class DataExtractor_ArchivesSpace(DataExtractor):
         for directory in os.listdir(config.assets['src']):
             id_list = self.getIdList(directory)
             if len(id_list) > 0:
-                self.getNewObjects(directory, id_list, headers)
+                self.getNewObjects(directory, id_list, resource_uris, headers)
             if len(set(updated_list) & set(id_list)) > 0:
                 logging.info("Exporting updated objects")
                 for ref_id in set(updated_list) & set(id_list):
-                    self.findObjectById(directory, ref_id, headers)
+                    self.findObjectById(directory, ref_id, resource_uris, headers)
                     id_list.remove(ref_id)
         self.findResources(resource_uris, headers)
 
@@ -61,7 +61,9 @@ class DataExtractor_ArchivesSpace(DataExtractor):
     # Looks for resources
     def findResources(self, uri_list, headers):
         for uri in set(uri_list):
-            resource = (requests.get(uri, headers=headers)).json()
+            url = '%s%s' % (config.archivesSpace['base_url'], uri)
+            resource = requests.get(url, headers=headers).json()
+            resourceId = uri.rsplit('/',1)[1]
             if resource["publish"]:
                 if not "LI" in resource["id_0"]:
                     self.saveFile(resourceId, resource, config.destinations['collections'])
@@ -144,14 +146,14 @@ class DataExtractor_ArchivesSpace(DataExtractor):
         return updated_list
 
     # gets JSON for newly added assets
-    def getNewObjects(self, directory, id_list, headers):
+    def getNewObjects(self, directory, id_list, resource_uris, headers):
         logging.info("**** Getting data for newly added assets in "+directory+" ***")
         for objectId in id_list:
             if not(os.path.isfile(os.path.join(config.DATA_DIR, directory, objectId+'.json'))):
-                self.findObjectById(directory, objectId, headers)
+                self.findObjectById(directory, objectId, resource_uris, headers)
 
     # Gets JSON for an object by ref_id
-    def findObjectById(self, directory, objectId, headers):
+    def findObjectById(self, directory, objectId, resource_uris, headers):
         url = '%s/find_by_id/archival_objects?ref_id[]=%s' % (config.archivesSpace['repository_url'], str(objectId))
         results = requests.get(url, headers=headers).json()
         for result in results["archival_objects"]:

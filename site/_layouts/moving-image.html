@@ -9,7 +9,7 @@ layout: default
 <div class="col-md-10 offset-md-1">
 
   <h1 id="asset-title" class="collection title">
-    {{ object.title }}
+    {{ object.display_string }}
     <small>
       {% include avnumber.html %}
     </small>
@@ -33,6 +33,7 @@ layout: default
 
     <div class="col-md-5">
       {% include av-metadata.html %}
+      {% include resource-link.html %}
     </div>
   </div>
 
