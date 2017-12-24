@@ -78,7 +78,7 @@ def make_pages(category):
                 data = get_json(join(sourceDataDir, filename))
 
                 identifier = splitext(filename)[0]
-                if data["jsonmodel_type"] == 'archival_object':
+                if data["jsonmodel_type"] in ['archival_object', 'top_container']:
                     title = data["display_string"].strip().replace('"', "'")
                 else:
                     title = data["title"].strip().replace('"', "'")

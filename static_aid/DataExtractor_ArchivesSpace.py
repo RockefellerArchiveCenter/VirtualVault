@@ -14,20 +14,23 @@ class DataExtractor_ArchivesSpace(DataExtractor):
         lastExport = self.lastExportTime()
         self.makeDestinations()
         headers = self.authenticate()
-        updated_list = self.getUpdatedRefIds(lastExport, headers)
+        # updated_list = self.getUpdatedRefIds(lastExport, headers)
+        updated_list = []
         resource_uris = []
         parent_uris = []
+        container_uris = []
         for directory in os.listdir(config.assets['src']):
             id_list = self.getIdList(directory)
             if len(id_list) > 0:
-                self.getNewObjects(directory, id_list, resource_uris, parent_uris, headers)
+                self.getNewObjects(directory, id_list, resource_uris, parent_uris, container_uris, headers)
             if len(set(updated_list) & set(id_list)) > 0:
                 logging.info("Exporting updated objects")
                 for ref_id in set(updated_list) & set(id_list):
-                    self.findObjectById(directory, ref_id, resource_uris, parent_uris, headers)
+                    self.findObjectById(directory, ref_id, resource_uris, parent_uris, container_uris, headers)
                     id_list.remove(ref_id)
         self.findResources(resource_uris, headers)
-        self.findParents(parent_uris, headers)
+        self.findObjectsFromList(parent_uris, headers, 'objects')
+        self.findObjectsFromList(container_uris, headers, 'containers')
 
         # self.findAgents(lastExport, headers)
         # self.findSubjects(lastExport, headers)
@@ -80,12 +83,12 @@ class DataExtractor_ArchivesSpace(DataExtractor):
         self.saveFile(identifier, tree, config.destinations['trees'])
 
     # Looks for archival objects
-    def findParents(self, uri_list, headers):
+    def findObjectsFromList(self, uri_list, headers, destination):
         for uri in set(uri_list):
             url = '%s%s' % (config.archivesSpace['base_url'], uri)
-            archival_object = requests.get(url, headers=headers).json()
+            object = requests.get(url, headers=headers).json()
             objectId = uri.rsplit('/',1)[1]
-            self.saveFile(objectId, archival_object, config.destinations['objects'])
+            self.saveFile(objectId, object, config.destinations[destination])
 
     # Looks for archival objects
     def findObjects(self, lastExport, headers):
@@ -154,14 +157,14 @@ class DataExtractor_ArchivesSpace(DataExtractor):
         return updated_list
 
     # gets JSON for newly added assets
-    def getNewObjects(self, directory, id_list, resource_uris, parent_uris, headers):
+    def getNewObjects(self, directory, id_list, resource_uris, parent_uris, container_uris, headers):
         logging.info("**** Getting data for newly added assets in "+directory+" ***")
         for objectId in id_list:
             if not(os.path.isfile(os.path.join(config.DATA_DIR, directory, objectId+'.json'))):
-                self.findObjectById(directory, objectId, resource_uris, parent_uris, headers)
+                self.findObjectById(directory, objectId, resource_uris, parent_uris, container_uris, headers)
 
     # Gets JSON for an object by ref_id
-    def findObjectById(self, directory, objectId, resource_uris, parent_uris, headers):
+    def findObjectById(self, directory, objectId, resource_uris, parent_uris, container_uris, headers):
         url = '%s/find_by_id/archival_objects?ref_id[]=%s' % (config.archivesSpace['repository_url'], str(objectId))
         results = requests.get(url, headers=headers).json()
         for result in results["archival_objects"]:
@@ -173,6 +176,11 @@ class DataExtractor_ArchivesSpace(DataExtractor):
                 resource_uris.append(archival_object['resource']['ref'])
                 if 'parent' in archival_object:
                     parent_uris.append(archival_object['parent']['ref'])
+                try:
+                    container_uris.append(archival_object['instances'][0]['sub_container']['top_container']['ref'])
+                except Exception as e:
+                    logging.error(e)
+                    pass
             else:
                 self.removeFile(objectId, config.destinations[directory])
 

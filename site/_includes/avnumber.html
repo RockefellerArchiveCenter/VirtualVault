@@ -1,1 +1,3 @@
-<span class="avnumber">{% for instance in instances %}{% if instance.instance_type == 'Moving Images' %}{{ instance.container.indicator_1 }}{% elsif instance.instance_type == 'audio' %}{{ instance.container.indicator_1 }}{% endif %}{% endfor %}</span>
+{% assign container_id = instances[0].sub_container.top_container.ref | split: '/' | last %}
+{% assign avnumber = site.data.containers[container_id].indicator %}
+{{ avnumber }}

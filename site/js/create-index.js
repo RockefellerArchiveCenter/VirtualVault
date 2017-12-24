@@ -19,6 +19,7 @@ function buildIndex(iterator) {
           this.field('title')
           this.field('avnumber')
           this.field('url')
+          this.field('collection')
 
           for (doc in documents) {
               this.add(documents[doc])

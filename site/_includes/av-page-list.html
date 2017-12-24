@@ -6,6 +6,8 @@
       {% assign item = item_hash[1] %}
       {% assign id = item_hash[0] %}
       {% assign instances = item.instances %}
+      {% assign collection_id = item.resource.ref | split:'/' | last %}
+      {% assign collection = site.data.collections[collection_id] %}
       {% capture description %}
         {% for note in item.notes %}
           {% if note.type == 'abstract' %}
@@ -18,7 +20,10 @@
         {% endfor %}
       {% endcapture %}
         <tr>
-          <td><a href="{{ site.url }}{{ site.baseurl }}{{ id }}"><span class="title">{{ item.display_string }}</span></a> <small><span class="av-number">{% include avnumber.html %}</span></small></td>
+          <td>
+            <p class="lead mb-1"><a href="{{ site.url }}{{ site.baseurl }}{{ id }}"><span class="title">{{ item.display_string }}</span></a> <small>{% include avnumber.html %}</small></p>
+            <p class="text-muted mb-0">{{collection.title}}</p>
+          </td>
         </tr>
       {% endfor %}
     </tbody>
