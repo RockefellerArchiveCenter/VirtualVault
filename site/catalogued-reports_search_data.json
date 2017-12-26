@@ -5,11 +5,14 @@ layout: null
   {% for item_hash in site.data.catalogued-reports %}
     {% assign object = item_hash[1] %}
     {% assign id = item_hash[0] %}
+    {% assign collection_id = object.resource.ref | split:'/' | last %}
+    {% assign collection = site.data.collections[collection_id] %}
     "catalogued-reports/{{id}}": {
       "href": "catalogued-reports/{{id}}",
       "title": "{{object.display_string | escape | strip_newlines | remove: '\'}}",
       "avnumber": "",
-      "url": "{{site.url}}/catalogued-reports/{{id}}"
+      "url": "{{site.url}}/catalogued-reports/{{id}}",
+      "collection": "{{collection.title}}"
     }{% unless forloop.last %},{% endunless %}
   {% endfor %}
 }
