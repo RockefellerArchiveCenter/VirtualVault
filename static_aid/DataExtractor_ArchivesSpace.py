@@ -14,8 +14,7 @@ class DataExtractor_ArchivesSpace(DataExtractor):
         lastExport = self.lastExportTime()
         self.makeDestinations()
         headers = self.authenticate()
-        # updated_list = self.getUpdatedRefIds(lastExport, headers)
-        updated_list = []
+        updated_list = self.getUpdatedRefIds(lastExport, headers)
         resource_uris = []
         parent_uris = []
         container_uris = []
