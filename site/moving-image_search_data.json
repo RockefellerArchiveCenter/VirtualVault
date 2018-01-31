@@ -5,8 +5,12 @@ layout: null
   {% for item_hash in site.data.moving-image %}
     {% assign object = item_hash[1] %}
     {% assign id = item_hash[0] %}
+    {% if object.instances[0].sub_container contains "indicator_2" %}
+    {% assign avnumber = object.instances[0].sub_container.indicator_2 %}
+    {% else %}
     {% assign container_id = object.instances[0].sub_container.top_container.ref | split: '/' | last %}
     {% assign avnumber = site.data.containers[container_id].indicator %}
+    {% endif %}
     {% assign collection_id = object.resource.ref | split:'/' | last %}
     {% assign collection = site.data.collections[collection_id] %}
     "moving-image/{{id}}": {

@@ -1,3 +1,7 @@
+{% if instances[0].sub_container contains "indicator_2" %}
+{% assign avnumber = instances[0].sub_container.indicator_2 %}
+{% else %}
 {% assign container_id = instances[0].sub_container.top_container.ref | split: '/' | last %}
 {% assign avnumber = site.data.containers[container_id].indicator %}
+{% endif %}
 {{ avnumber }}
