@@ -1,4 +1,4 @@
-# StaticAid
+# Virtual Vault
 
 A customized fork of [staticAid](https://github.com/helrond/staticAid) developed as a temporary method of delivering digitized assets.
 
