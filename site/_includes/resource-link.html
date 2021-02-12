@@ -1,13 +1,13 @@
 <div class="card">
   <div class="card-header">
-    <h3>Collection Information</h3>
+    <h3>Found in</h3>
   </div>
   <div class="card-body">
     {% for collection_hash in site.data.collections %}
       {% assign collection = collection_hash[1] %}
       {% if object.resource.ref == collection.uri %}
-       <h5>{{collection.title}}, {{collection.dates[0].expression}} <small>{{collection.id_0}}</small></h5>
-       <a class="btn btn-secondary" href="https://dimes.rockarch.org/search?query={{collection.title}}">
+       <h5>{{collection.title}}, {{collection.dates[0].expression}}</h5>
+       <a class="btn btn-secondary" href="https://dimes.rockarch.org/search?query={{object.title}}">
          Search for this item in DIMES
        </a>
       {% endif %}
