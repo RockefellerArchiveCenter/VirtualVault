@@ -75,11 +75,11 @@ class DataExtractor_ArchivesSpace(DataExtractor):
             else:
                 self.removeFile(resourceId, config.destinations['collections'])
 
-    # Looks for resource trees
-    def findTree(self, identifier, headers):
-        url = '%s/resources/%s/tree' % (config.archivesSpace['repository_url'], str(identifier))
-        tree = (requests.get(url, headers=headers)).json()
-        self.saveFile(identifier, tree, config.destinations['trees'])
+    # Looks for resource trees. Deprecated endpoint that is not called in this environment.
+    #def findTree(self, identifier, headers):
+        #url = '%s/resources/%s/tree' % (config.archivesSpace['repository_url'], str(identifier))
+        #tree = (requests.get(url, headers=headers)).json()
+        #self.saveFile(identifier, tree, config.destinations['trees'])
 
     # Looks for archival objects
     def findObjectsFromList(self, uri_list, headers, destination):
