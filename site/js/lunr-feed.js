@@ -37,6 +37,8 @@ $(document).ready(function() {
     $('#results').empty().append('<img class="mx-auto d-block" src="/img/loading.gif" />')
     $('#query').attr("value", searchTerm);
 
+    _paq.push(['trackEvent', searchType, 'search', searchTerm]);
+
     $.getJSON("/"+searchType+"_search_index.json", function(data){
       let index = lunr.Index.load(data)
 
