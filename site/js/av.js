@@ -33,31 +33,31 @@ window.onload = function() {
 		};
 
 		asset.addEventListener('play', function(){
-			ga('send', 'event', assetType, 'play', assetTitle);
+			_paq.push(['trackEvent', assetType, 'play', assetTitle]);
 		});
 
 		asset.addEventListener('pause', function(){
-			ga('send', 'event', assetType, 'pause', assetTitle);
+			_paq.push(['trackEvent', assetType, 'pause', assetTitle]);
 		});
 
 		asset.addEventListener('ended', function(){
-			ga('send', 'event', assetType, 'ended', assetTitle);
+			_paq.push(['trackEvent', assetType, 'ended', assetTitle]);
 		});
 
 		downloadButton.addEventListener("mousedown", function() {
-			ga('send', 'event', assetType, 'download', assetTitle);
+			_paq.push(['trackEvent', assetType, 'download', assetTitle]);
 		});
 
 		window.addEventListener("fullscreenchange", function( event ) {
-			ga('send', 'event', assetType, 'full screen', assetTitle);
+			_paq.push(['trackEvent', assetType, 'full screen', assetTitle]);
 		});
 
 		window.addEventListener("webkitfullscreenchange", function( event ) {
-			ga('send', 'event', assetType, 'full screen', assetTitle);
+			_paq.push(['trackEvent', assetType, 'full screen', assetTitle]);
 		});
 
 		window.addEventListener("mozfullscreenchange", function( event ) {
-			ga('send', 'event', assetType, 'full screen', assetTitle);
+			_paq.push(['trackEvent', assetType, 'full screen', assetTitle]);
 		});
 	}
 }
