@@ -29,6 +29,6 @@ layout: default
 
 <script>
 document.getElementById('download-button').addEventListener("click", function() {
-  ga('send', 'event', 'catalogued-reports', 'download', '{{object.title}}');
+  _paq.push(['trackEvent', 'catalogued-reports', 'download', '{{object.title}}']);
 });
 </script>
