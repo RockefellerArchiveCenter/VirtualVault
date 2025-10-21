@@ -1,4 +1,4 @@
-ArchivesSnake==0.9.1
-psutil==5.8.0
-pytest==6.2.4
-vcrpy==4.1.1
+ArchivesSnake==0.10
+psutil==7.0
+pytest~=8.2
+vcrpy~=7.0
