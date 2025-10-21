@@ -3,10 +3,16 @@
 from os import getpid
 from os.path import isfile, isdir, join
 
+import pytest
 from static_aid import config, utils
 from static_aid.DataExtractor import DataExtractor
 
-def test_is_running():
+@pytest.fixture
+def remove_pid_file():
+    yield
+    utils.remove_file_or_dir(config.PID_FILE_PATH)
+
+def test_is_running(remove_pid_file):
     extractor = DataExtractor()
     utils.remove_file_or_dir(config.PID_FILE_PATH)
     assert extractor.is_running() == False, "No PID file"
@@ -17,22 +23,21 @@ def test_is_running():
         pid_file.write(str(getpid()))
     assert extractor.is_running() == True, "Current process"
 
-def test_register_pid():
+def test_register_pid(remove_pid_file):
     extractor = DataExtractor()
     extractor.register_pid()
     assert isfile(config.PID_FILE_PATH)
     with open(config.PID_FILE_PATH, "r") as pid_file:
         assert str(getpid()) in [l for l in pid_file]
 
-def test_make_destinations():
+def test_make_destinations(remove_pid_file):
     for k in config.destinations:
         utils.remove_file_or_dir(join(config.DATA_DIR, config.destinations[k]))
     DataExtractor().make_destinations()
     for k in config.destinations:
         assert isdir(join(config.DATA_DIR, config.destinations[k]))
 
-
-def test_get_last_export_time():
+def test_get_last_export_time(remove_pid_file):
     extractor = DataExtractor()
     extractor.update = False
     assert extractor.get_last_export_time() == 0
@@ -40,12 +45,7 @@ def test_get_last_export_time():
     extractor.set_last_export_time(12345)
     assert extractor.get_last_export_time() == 12345
 
-
-def test_set_last_export_time():
+def test_set_last_export_time(remove_pid_file):
     extractor = DataExtractor(update=True)
     extractor.set_last_export_time(54321)
     assert extractor.get_last_export_time() == 54321
-
-
-def teardown():
-    utils.remove_file_or_dir(config.PID_FILE_PATH)

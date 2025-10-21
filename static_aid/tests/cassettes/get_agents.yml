@@ -18,19 +18,9 @@ interactions:
     uri: http://sandbox.archivesspace.org/api/users/admin/login
   response:
     body:
-      string: !!binary |
-        H4sIAAAAAAAAA+1WyW7bMBC99zN4VmAtlmzr1n/oKUEg0OTIpSsuICm3RuB/70iiF1mKA/RWwEe+
-        92Y4K8EP4sA5oRUpSVYAbNZpXK/WNSQ0X/E8q7O8huUqzWNaxDxhy4LFGWdJXiR1nm6KjKVJmmTJ
-        ts45iUjrwJLygzSa/aoOYAfPxXJgFJWA91AuhUJxOH7vjsJ5S722CAtXuaPzIKvBm7ctRIRZoB4q
-        L3qbNE6Tlzh/yeIf8bqMs3K5ekXTYCenqmSDkjLPXkOQX2n2TiupOTSVP5pO18cSkZ3VrXGkfHvv
-        Ax1SCSG2VqBw0SndIkEx3YHylQWmLe+qYqHuBD3sFga0aQCFp4gYsFL0fXCdcGHBaCewHgI6V+Ub
-        aQ3v8sfCUo+ys9eIYIyAxAGJbdtQe7xSwca12z0wPzGZ4EE/CvuivkOD9sG1oFoJ9i5aRHYzNw/w
-        /BVMK0+Fwp4Zq2vRwERxKcpEQMNsofEwG4htkZRQhYYyqhh2WUijbSfb6+0VDYdh9EaHS4OONxWy
-        7Kc40GZaOtctmZyrKmuQFLX4pKtwmDMaXT5EHjSuAxSHP9d0JVV0Wtszeo2Mem/FtvXgrvSD0k8U
-        98x8+wfu84YFgeW46iBNQ0fxjBIP2HSWBrxfw+txblAlcNFPKhfejacQV1vxs+8bbtJi1xpjsYYz
-        FL5oytVYmgfUKKPz/jE2vMnTzZwZpPOWfDJIkyW6Z7jYCY+x6fnH4G4CA4oZ69aym8YdBPwOQ9bf
-        detq4JrmZkh7aJR8j5yrCZzgAxsKh2dDGXSv4HOfn/v83Of/cp+j5xfmH74w76fT6dtfWCuIMaUL
-        AAA=
+      string: '{"session":"36ee9820f78fe1a57d53f35fe47250a60d1c46c03dc1561f52963c212131bf5d","user":{"lock_version":64,"username":"admin","name":"Administrator","is_system_user":true,"create_time":"2021-05-30T08:03:47Z","system_mtime":"2021-05-30T19:47:53Z","user_mtime":"2021-05-30T19:47:53Z","jsonmodel_type":"user","groups":[],"is_admin":true,"uri":"/users/1","agent_record":{"ref":"/agents/people/1"},"permissions":{"/repositories/1":["update_location_record","delete_vocabulary_record","update_subject_record","delete_subject_record","update_agent_record","delete_agent_record","update_vocabulary_record","update_enumeration_record","merge_subject_record","merge_agent_record","update_container_profile_record","update_location_profile_record","administer_system","become_user","cancel_importer_job","cancel_job","create_job","create_repository","delete_archival_record","delete_assessment_record","delete_classification_record","delete_event_record","delete_repository","import_records","index_system","manage_agent_record","manage_assessment_attributes","manage_container_profile_record","manage_container_record","manage_enumeration_record","manage_location_profile_record","manage_rde_templates","manage_repository","manage_subject_record","manage_users","manage_vocabulary_record","mediate_edits","merge_agents_and_subjects","merge_archival_record","suppress_archival_record","transfer_archival_record","transfer_repository","update_accession_record","update_assessment_record","update_classification_record","update_container_record","update_digital_object_record","update_event_record","update_resource_record","view_agent_contact_record","view_all_records","view_repository","view_suppressed"],"_archivesspace":["administer_system","become_user","cancel_importer_job","cancel_job","create_job","create_repository","delete_archival_record","delete_assessment_record","delete_classification_record","delete_event_record","delete_repository","import_records","index_system","manage_agent_record","manage_assessment_attributes","manage_container_profile_record","manage_container_record","manage_enumeration_record","manage_location_profile_record","manage_rde_templates","manage_repository","manage_subject_record","manage_users","manage_vocabulary_record","mediate_edits","merge_agents_and_subjects","merge_archival_record","suppress_archival_record","transfer_archival_record","transfer_repository","update_accession_record","update_assessment_record","update_classification_record","update_container_record","update_digital_object_record","update_event_record","update_resource_record","view_agent_contact_record","view_all_records","view_repository","view_suppressed","update_location_record","delete_vocabulary_record","update_subject_record","delete_subject_record","update_agent_record","delete_agent_record","update_vocabulary_record","update_enumeration_record","merge_subject_record","merge_agent_record","update_container_profile_record","update_location_profile_record"]}}}
+
+        '
     headers:
       Cache-Control:
       - private, must-revalidate, max-age=0
@@ -106,14 +96,12 @@ interactions:
     uri: http://sandbox.archivesspace.org/api/repositories/2
   response:
     body:
-      string: !!binary |
-        H4sIAAAAAAAAA4VSTW+DMAy971egnDaJqUA/1vIPdu9p6xSl4DJvgaDYVEJV//ucEqFqh+307Odn
-        y3nORVlXfeszeELXqTJLlYfe6crVoEpF9VGlqjNtTBIGYmGcb2aJsQklFXTspdAbL5HGjhh5YJmp
-        Y/dUEUnlwTDU+jgKa+oWOyGtIdatq/GEv0uTXjPexhRZkT9n6+dlts9XZb4p19mbiGgkhla3f6sG
-        Av+fph+OFulTlewHSFUNVHns+eaOCs9P7imxwqBG0jWSOVqoVXkylmDiCZi0ORu0oSb97we13W4P
-        Kg24m3CXRcwjFhGXEVcR1xE3EV8iyryPYIEdmvlkslHItRnYzStVbpArBW9f96L5IteJ5WA1j33Y
-        LlyekJ1IxCuPQi1mDoEWhfDy0N6aURN77Jq7b5E8SvQkCtOELyCNHkgiM3l3kfGnMPFWpkXlfO98
-        uKykyGF8rq7Xhx998KuNkgIAAA==
+      string: '{"lock_version":0,"repo_code":"sdb","name":"sdb test","org_code":"sal
+        s centr","parent_institution_name":"parent","created_by":"admin","last_modified_by":"admin","create_time":"2021-05-30T14:16:50Z","system_mtime":"2021-05-30T14:16:50Z","user_mtime":"2021-05-30T14:16:50Z","publish":true,"description":"test
+        description","oai_is_disabled":false,"oai_sets_available":"[\"888\",\"889\",\"890\",\"891\",\"892\",\"893\",\"894\",\"895\",\"896\",\"897\",\"898\"]","slug":"sdb","is_slug_auto":false,"country":"IT","jsonmodel_type":"repository","uri":"/repositories/2","display_string":"sdb
+        test (sdb)","agent_representation":{"ref":"/agents/corporate_entities/1"}}
+
+        '
     headers:
       Cache-Control:
       - private, must-revalidate, max-age=0
@@ -151,18 +139,13 @@ interactions:
     uri: http://sandbox.archivesspace.org/api/agents/corporate_entities?page=1&page_size=100&with_params=all_ids&with_params=modified_since
   response:
     body:
-      string: !!binary |
-        H4sIAAAAAAAAA+1VzW7bMAy+7ykCndMl7tYdfNpD7LQhEBSJSdTKoiFRXb0i7z5KtjM7adprC+yS
-        SPwRyY8f6WexsyGSbNUeRF0thVPTGx1snNyQlCunADE5iqL+9Swc6gf5CCFa9KJeL0Wbts7Gg6h3
-        ykVYCh1AERi57UQtlGmsF0OcBo3d2XNVby/JNhxW3K5vq5v13c2X9Y/qa119q+/WP9kodpGgkc3r
-        VilCeMuGK4wu7aVKhKec7yN6zg6cpK7NzoyBJ6kxtBhydnyz1LH7qPCk9DVEvCoJ5L9FTKFc2dMY
-        xjHKqtRezosq158frkXAYgWNsgy6IIj0Pf98JhLvHtSr+BWY2IDAQXtADxmyDUOE1B+PmxHTAAy3
-        KT4B3WDXq5QjYBi5oAg007D1Y+4N+igNaKe4W/kytUE6cAX5rDt2MDDTMt6ewCuvQTL9CYOdGwx5
-        WZPjMNJhpr0ijpiCnr/TOnUmQa1Te5nvLnl9ISRsrT7LaxbEWf/ALBh06EY5PBXsnDSoU8PK8w6U
-        Dhv52/L0e361xWinKEy1w6yz4NLOcH+ixJ2EJ4aRwYaJv1N+nzi3MTiPxLV1EmyjQieHIYpmu8hj
-        kOmKgV4Tl5GWXD/kkRU1hfT+1xHnfGAQ/4AZE+YFZWxktowY9OL7FGw0tjDj365Fv4OQsZYNAFm/
-        P6l6cnBgRpjX+AszWjB7YcVx2rI0s+9VyzPlHLuNTSszG8AVWAvfRqYEy8+uetHq7GXmyao6LdC3
-        1iyDMBCaWzplXZ7FU41znP6T6UOSiT8OltysD8fN8dNfWltL0KsIAAA=
+      string: '{"first_page":1,"last_page":1,"this_page":1,"total":1,"results":[{"lock_version":0,"publish":false,"created_by":"admin","last_modified_by":"admin","create_time":"2021-05-30T14:16:50Z","system_mtime":"2021-05-30T14:16:50Z","user_mtime":"2021-05-30T14:16:50Z","is_slug_auto":false,"jsonmodel_type":"agent_corporate_entity","agent_contacts":[{"lock_version":0,"name":"name
+        surname","address_1":"address 1","city":"rome","email":"test@test.tt","created_by":"admin","last_modified_by":"admin","create_time":"2021-05-30T14:16:50Z","system_mtime":"2021-05-30T14:16:50Z","user_mtime":"2021-05-30T14:16:50Z","jsonmodel_type":"agent_contact","telephones":[],"notes":[]}],"agent_record_controls":[],"agent_alternate_sets":[],"agent_conventions_declarations":[],"agent_other_agency_codes":[],"agent_maintenance_histories":[],"agent_record_identifiers":[],"agent_identifiers":[],"agent_sources":[],"agent_places":[],"agent_occupations":[],"agent_functions":[],"agent_topics":[],"agent_resources":[],"linked_agent_roles":[],"external_documents":[],"notes":[],"used_within_repositories":[],"used_within_published_repositories":[],"dates_of_existence":[],"used_languages":[],"names":[{"lock_version":0,"primary_name":"sdb
+        test","sort_name":"sdb test","sort_name_auto_generate":true,"created_by":"admin","last_modified_by":"admin","create_time":"2021-05-30T14:16:50Z","system_mtime":"2021-05-30T14:16:50Z","user_mtime":"2021-05-30T14:16:50Z","authorized":true,"is_display_name":true,"jurisdiction":false,"conference_meeting":false,"source":"local","jsonmodel_type":"name_corporate_entity","use_dates":[],"parallel_names":[]}],"related_agents":[],"uri":"/agents/corporate_entities/1","agent_type":"agent_corporate_entity","is_linked_to_published_record":false,"display_name":{"lock_version":0,"primary_name":"sdb
+        test","sort_name":"sdb test","sort_name_auto_generate":true,"created_by":"admin","last_modified_by":"admin","create_time":"2021-05-30T14:16:50Z","system_mtime":"2021-05-30T14:16:50Z","user_mtime":"2021-05-30T14:16:50Z","authorized":true,"is_display_name":true,"jurisdiction":false,"conference_meeting":false,"source":"local","jsonmodel_type":"name_corporate_entity","use_dates":[],"parallel_names":[]},"title":"sdb
+        test"}]}
+
+        '
     headers:
       Cache-Control:
       - private, must-revalidate, max-age=0
@@ -236,17 +219,9 @@ interactions:
     uri: http://sandbox.archivesspace.org/api/agents/people?page=1&page_size=100&with_params=all_ids&with_params=modified_since
   response:
     body:
-      string: !!binary |
-        H4sIAAAAAAAAA+1VTW/bMAy972fonCJO22GDb/sPO20IBE1iEq20aOija1rkv+/ZsQ07TdfbdtnF
-        tkiKenx8lF/UzseUdWv2pOrNSrGZr/LBp9lKsuH+K1IqnJOqv78oFvugHykmL0HV1Uq15Qf7dFD1
-        znCilbKRTCadfYM06ra63dxUH2/uqq/V57q6q+8/fVMrlY4pU6ObP0eVRPG9GCBOXPbalCyqzrEA
-        ws8koRFHrPOx7faipIA6gRqgV8PSSsjG9mVtR1skK9H1rii8cBnOFENXWqLlJkQ/4g1CknZk2UTT
-        L+Yxkg+opfu2R2xwtPA2xodMwQRLGj3IEj1dw+Vdd87Oo5C59w1zkhLtMk/L5sIi1pb2Nd5dCfaV
-        MUvr7QWuxSHswwM5PfiERzs99dyxdmJLA+dgD5LHEPTa6V8eEgzI2kryEwtqPTesN+oifFAgDBcb
-        EefQsKRlp+kJvIJ9mh3HJuwLwI5oTENviTz6xsSj7kKgpy+u8QH50GiJnZwl5nd9vUQ1qCG4aNTq
-        Xx4XYDiAnmdyIwAMkPMJwhirO5vPfUUicIFrAJdA6ds5rfuSIEqKMDoPhWZ1ZfT6sGnyAFH3LTkz
-        3mJUmBE8Ur89TdLCw02CjsTYNShrVEz0yL8+m9YtScsEcUxivTr6qHYQKXoxF043X9MdtiTkvx7+
-        oR7wH/KZrxEJoF2FXY87jzptTx9+AxwRGpfhBgAA
+      string: '{"first_page":1,"last_page":1,"this_page":1,"total":1,"results":[{"lock_version":0,"publish":false,"create_time":"2021-05-30T08:03:47Z","system_mtime":"2021-05-30T08:03:47Z","user_mtime":"2021-05-30T08:03:47Z","is_slug_auto":true,"jsonmodel_type":"agent_person","agent_contacts":[],"agent_record_controls":[],"agent_alternate_sets":[],"agent_conventions_declarations":[],"agent_other_agency_codes":[],"agent_maintenance_histories":[],"agent_record_identifiers":[],"agent_identifiers":[],"agent_sources":[],"agent_places":[],"agent_occupations":[],"agent_functions":[],"agent_topics":[],"agent_resources":[],"linked_agent_roles":[],"external_documents":[],"notes":[],"used_within_repositories":["/repositories/1"],"used_within_published_repositories":[],"dates_of_existence":[],"used_languages":[],"names":[{"lock_version":0,"primary_name":"Administrator","sort_name":"Administrator","sort_name_auto_generate":true,"create_time":"2021-05-30T08:03:47Z","system_mtime":"2021-05-30T08:03:47Z","user_mtime":"2021-05-30T08:03:47Z","authorized":true,"is_display_name":true,"source":"local","rules":"local","name_order":"direct","jsonmodel_type":"name_person","use_dates":[],"parallel_names":[]}],"agent_genders":[],"related_agents":[],"uri":"/agents/people/1","agent_type":"agent_person","is_linked_to_published_record":false,"display_name":{"lock_version":0,"primary_name":"Administrator","sort_name":"Administrator","sort_name_auto_generate":true,"create_time":"2021-05-30T08:03:47Z","system_mtime":"2021-05-30T08:03:47Z","user_mtime":"2021-05-30T08:03:47Z","authorized":true,"is_display_name":true,"source":"local","rules":"local","name_order":"direct","jsonmodel_type":"name_person","use_dates":[],"parallel_names":[]},"title":"Administrator","is_user":"admin"}]}
+
+        '
     headers:
       Cache-Control:
       - private, must-revalidate, max-age=0
@@ -284,17 +259,12 @@ interactions:
     uri: http://sandbox.archivesspace.org/api/agents/software?page=1&page_size=100&with_params=all_ids&with_params=modified_since
   response:
     body:
-      string: !!binary |
-        H4sIAAAAAAAAA+1VwW7bMAy97ysGndPGabZh8G3f0J42BIIm0bFWWTREKm1W5N9HO3Zg18122y47
-        xSIfZfK9R+dFVT4R69bsQZWblQpmeuLa0+SEbEL/lIByYFLltxcV0D7qAyTyGFVZrFSbvwdPtSor
-        EwhWyiYwDJp9I9eou+Juc1N8vNkWD8XnstiWHz59VStFR2JodPN7VCZIf8JIxxTyXpvMqEpOWVr4
-        QRgbdBA0H9uuVkaKrAkrfjIJpOocsBjZ2H6w3RhLYDG5PpUwzFImMKTYDUcwLxL0QX6FEtIObDDJ
-        9IcpBrmWabpne5QCB7NsY3xkiCZa0KICY/LwVl/ede+pvAgwzV4JE+Zk5/e0wbyKoLW5XfZb5WgX
-        QcbW21d9zV4SfHwEp4cchjEOzz13QTu0uZHkEI/II0TUdvrJiwmj3Noi+SkL0+xgOQkscU70IY2V
-        hmehUciGSX0wcZ+lt/HlpoErrh69ojuMOOhLsrU/AN23Qp8Y6IJVh+1tcVt0nsbEb8LfLyG9XbWQ
-        BOIUGH37l1dHeqiFuZ/gxgZkmZwnschxGOQcPissFwlN8kmQD0Luhb2cFwvXzzjZN2lH98qciW9l
-        QUIQ+KjA7tRJlLyUrnvv0HqsXm8u+3ptm6XtwXdC6tQc3cpcPkzzyf5r/u81l/8Yz+Eqd6fd6d0v
-        /rTqj7IGAAA=
+      string: '{"first_page":1,"last_page":1,"this_page":1,"total":1,"results":[{"lock_version":0,"publish":false,"create_time":"2021-05-30T08:03:46Z","system_mtime":"2021-05-30T08:03:46Z","user_mtime":"2021-05-30T08:03:46Z","is_slug_auto":true,"jsonmodel_type":"agent_software","agent_contacts":[],"agent_record_controls":[],"agent_alternate_sets":[],"agent_conventions_declarations":[],"agent_other_agency_codes":[],"agent_maintenance_histories":[],"agent_record_identifiers":[],"agent_identifiers":[],"agent_sources":[],"agent_places":[],"agent_occupations":[],"agent_functions":[],"agent_topics":[],"agent_resources":[],"linked_agent_roles":[],"external_documents":[],"notes":[],"used_within_repositories":[],"used_within_published_repositories":[],"dates_of_existence":[],"used_languages":[],"names":[{"lock_version":0,"software_name":"ArchivesSpace","version":"v3.0.0","sort_name":"ArchivesSpace
+        v3.0.0","sort_name_auto_generate":true,"create_time":"2021-05-30T08:03:46Z","system_mtime":"2021-05-30T08:03:46Z","user_mtime":"2021-05-30T08:03:46Z","authorized":true,"is_display_name":true,"source":"local","rules":"local","jsonmodel_type":"name_software","use_dates":[],"parallel_names":[]}],"uri":"/agents/software/1","agent_type":"agent_software","is_linked_to_published_record":false,"display_name":{"lock_version":0,"software_name":"ArchivesSpace","version":"v3.0.0","sort_name":"ArchivesSpace
+        v3.0.0","sort_name_auto_generate":true,"create_time":"2021-05-30T08:03:46Z","system_mtime":"2021-05-30T08:03:46Z","user_mtime":"2021-05-30T08:03:46Z","authorized":true,"is_display_name":true,"source":"local","rules":"local","jsonmodel_type":"name_software","use_dates":[],"parallel_names":[]},"title":"ArchivesSpace
+        v3.0.0"}]}
+
+        '
     headers:
       Cache-Control:
       - private, must-revalidate, max-age=0
