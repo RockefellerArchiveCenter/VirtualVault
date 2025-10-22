@@ -53,7 +53,8 @@ def create_initial_structure(embedded):
              join(config.STAGING_DIR, '_layouts', 'default.html'))
 
     # copy _data into place so that JSON is available to the Liquid templates
-    copytree(config.DATA_DIR, join(config.STAGING_DIR, '_data'))
+    if exists(config.DATA_DIR):
+        copytree(config.DATA_DIR, join(config.STAGING_DIR, '_data'))
 
 
 def get_note_content(note):
