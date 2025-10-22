@@ -3,10 +3,7 @@ services:
     build: .
     entrypoint: /code/entrypoint.sh
     volumes:
-      - ./build:/code/build
-      - /Users/harnold/Desktop/assets:/assets
-      - ./static_aid:/code/static_aid
-      - ./local_settings.cfg:/code/local_settings.cfg
+      - /mnt/assets:/assets
     ports:
       - '4000:4000'
     environment:
