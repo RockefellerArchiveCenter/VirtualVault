@@ -32,6 +32,10 @@ people: agents/people
 software: agents/software
 subjects: subjects
 trees: trees
+audio: audio
+moving-image: moving-image
+catalogued-reports: catalogued-reports
+containers: containers
 
 [Assets]
 src: /assets
