@@ -1,4 +1,5 @@
 import logging
+from os import getenv
 from pathlib import Path
 
 from asnake.aspace import ASpace
@@ -10,9 +11,9 @@ class DataExtractor_ArchivesSpace(DataExtractor):
     def __init__(self, update=False):
         super().__init__(update)
         self.aspace = ASpace(
-            username=config.archivesSpace['user'],
-            password=config.archivesSpace['password'],
-            baseurl=config.archivesSpace['baseurl'],
+            username=getenv('AS_USERNAME'),
+            password=getenv('AS_PASSWORD'),
+            baseurl=getenv('AS_BASEURL'),
         )
         self.repo = self.aspace.repositories(config.archivesSpace['repository'])
 
