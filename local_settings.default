@@ -33,6 +33,10 @@ software: agents/software
 subjects: subjects
 trees: trees
 
+[Assets]
+src: /assets
+dest: /code/build/site/assets
+
 [Logging]
 filename: static_aid.log
 level: INFO
