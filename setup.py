@@ -13,6 +13,7 @@ setup(
         'console_scripts': [
             'static-aid-get-data=static_aid.get_json:main',
             'static-aid-make-pages=static_aid.make_pages:main',
+            'static-aid-link-assets=static_aid.make_pages:link_assets',
         ],
     },
     zip_safe=False

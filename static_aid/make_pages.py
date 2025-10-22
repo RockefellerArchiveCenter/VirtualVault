@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-from os import listdir
-from os.path import exists, join, splitext
+from os import listdir, symlink
+from os.path import exists, isdir, join, splitext
 from shutil import copyfile, copytree
 from datetime import datetime
 
@@ -111,6 +111,11 @@ def make_pages(category):
             page_uris.append("{}/{}/{}".format(config.site["url"], category, identifier))
     return page_uris
 
+def link_assets():
+    if (config.assets['src'] and config.assets['dest']):
+        if not(isdir(config.assets['dest'])):
+            symlink(config.assets['src'], config.assets['dest'])
+
 def main():
     parser = ArgumentParser(description='StaticAid Page Generator')
     parser.add_argument('-e',
@@ -124,7 +129,7 @@ def main():
 
     create_initial_structure(args.embedded)
     site_urls = []
-    for category in ["collections", "objects", "families", "organizations", "people", "software"]:
+    for category in ["audio", "catalogued-reports", "moving-image"]:
         site_urls += make_pages(category)
     create_sitemap(site_urls)
     create_site_config()
