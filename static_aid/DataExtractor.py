@@ -69,7 +69,7 @@ class DataExtractor(object):
                     return int(str(pickle.load(pickle_handle)))
             except:
                 pass
-        return 0
+        return int(time()) # Return the current time.
 
     def set_last_export_time(self, start_time):
         """Store the current time in Unix epoch time, for example 1439563523."""
