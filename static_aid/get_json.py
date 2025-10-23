@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
-from argparse import ArgumentParser
 import logging
+from argparse import ArgumentParser
 
 from static_aid import config, utils
-from static_aid.DataExtractor_Adlib import DataExtractor_Adlib, DataExtractor_Adlib_Fake
+from static_aid.DataExtractor_Adlib import (DataExtractor_Adlib,
+                                            DataExtractor_Adlib_Fake)
 from static_aid.DataExtractor_ArchivesSpace import DataExtractor_ArchivesSpace
 
 DATA_SOURCE_EXTRACTORS = {'adlib': DataExtractor_Adlib,
@@ -17,6 +18,7 @@ logging.basicConfig(filename=config.logging['filename'],
                     datefmt=config.logging['datefmt'],
                     level=config.logging['level'],
                     )
+
 
 def main():
     parser = ArgumentParser(description='StaticAid Data Extractor')
@@ -38,8 +40,10 @@ def main():
     if arguments.replace:
         utils.remove_file_or_dir(config.DATA_DIR)
 
-    extractorClass = DATA_SOURCE_EXTRACTORS.get(config.dataExtractor['dataSource'])
+    extractorClass = DATA_SOURCE_EXTRACTORS.get(
+        config.dataExtractor['dataSource'])
     extractorClass(update=arguments.update).run()
+
 
 if __name__ == '__main__':
     main()

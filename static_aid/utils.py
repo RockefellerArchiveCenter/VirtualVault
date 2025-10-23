@@ -8,7 +8,7 @@ def bytes_label(size):
     """Returns a human-readable file size with unit label."""
     try:
         size = float(size.encode('ascii', errors='ignore').strip())
-    except:
+    except BaseException:
         # probably already text-formatted
         return size
     suffix = 'B'
@@ -38,7 +38,7 @@ def load_json(path):
 
 def remove_file_or_dir(path):
     """Removes a file or directory at a given path."""
-    if not(exists(path)):
+    if not (exists(path)):
         pass
     if isdir(path):
         rmtree(path)

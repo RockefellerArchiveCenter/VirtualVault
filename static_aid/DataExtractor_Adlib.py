@@ -1,14 +1,16 @@
-from datetime import datetime
-from json import load, dump
 import logging
+import shelve
+from datetime import datetime
+from json import dump, load
 from logging import INFO
 from os import listdir, makedirs, remove
-from os.path import join, exists
+from os.path import exists, join
+
 import requests
-import shelve
 
 from static_aid import config, utils
 from static_aid.DataExtractor import DataExtractor
+
 
 def makeDir(dirPath):
     try:
@@ -17,17 +19,21 @@ def makeDir(dirPath):
         # exists
         pass
 
+
 def adlibKeyFromUnicode(u):
     return u.encode('ascii', errors='backslashreplace').lower()
 
+
 def prirefString(u):
-    if type(u) == int:
+    if isinstance(u, int):
         return str(u)
     return u.encode('ascii', errors='backslashreplace').lower()
+
 
 def uriRef(category, priref):
     linkDestination = config.destinations[category].strip('/ ')
     return '/%s/%s' % (linkDestination, priref)
+
 
 class DataExtractor_Adlib(DataExtractor):
 
@@ -36,24 +42,27 @@ class DataExtractor_Adlib(DataExtractor):
         self.objectCaches = {}  # contains 'shelve' instances keyed by collection name
         self.objectCacheInsertionCount = 0
 
-    # set to True to cache the raw JSON result from Adlib (before it is converted to StaticAid-friendly JSON)
+    # set to True to cache the raw JSON result from Adlib (before it is
+    # converted to StaticAid-friendly JSON)
     DUMP_RAW_DATA = True
-    # set to True to read raw JSON results from the cache instead of from Adlib endpoints (offline/debug mode)
+    # set to True to read raw JSON results from the cache instead of from
+    # Adlib endpoints (offline/debug mode)
     READ_FROM_RAW_DUMP = False
-    # set to False for testing purposes (quicker processing when using RAW_DUMP mechanism)
+    # set to False for testing purposes (quicker processing when using
+    # RAW_DUMP mechanism)
     READ_FROM_ADLIB_API = True
 
     # number of records to save to JSON cache before syncing to disk
     CACHE_SYNC_INTERVAL = 100
 
-
-    ### Top-level stuff ###
-
+    # Top-level stuff
     def _run(self):
-        # create a collection > key > object cache so that we can generate links between them
+        # create a collection > key > object cache so that we can generate
+        # links between them
         self.cacheAllCollections()
 
-        # link each cached object by priref wherever there is a reference to agent name, part_of, parts, etc.
+        # link each cached object by priref wherever there is a reference to
+        # agent name, part_of, parts, etc.
         self.linkRecordsById()
 
         # analyze the extent records by item > ... > collection
@@ -61,7 +70,6 @@ class DataExtractor_Adlib(DataExtractor):
 
         # save the results to build/data/**.json
         self.saveAllRecords()
-
 
     def cacheAllCollections(self):
         logging.debug('Extracting data from Adlib into object cache...')
@@ -79,7 +87,6 @@ class DataExtractor_Adlib(DataExtractor):
         self.extractFileLevelObjects()
         self.extractItemLevelObjects()
 
-
     def linkRecordsById(self):
         tree = shelve.open(self.cacheFilename('trees'))
 
@@ -92,20 +99,24 @@ class DataExtractor_Adlib(DataExtractor):
                 # link records together by type
                 if category == 'objects':
                     self.addRefToLinkedAgents(data, category)
-                    self.createTreeNode(tree, data, 'archival_object', category)
+                    self.createTreeNode(
+                        tree, data, 'archival_object', category)
 
                 elif category == 'collections':
                     # NOTE: in ArchivesSpace, collection.tree.ref is something like "/repositories/2/resources/91/tree"
-                    # but in collections.html, it's only used as an indicator of whether a tree node exists.
+                    # but in collections.html, it's only used as an indicator
+                    # of whether a tree node exists.
                     data['tree'] = {'ref': True}
 
                     self.addRefToLinkedAgents(data, category)
                     self.createTreeNode(tree, data, 'resource', category)
 
-                # this is necessary because the 'shelve' objects don't behave *exactly* like a dict
+                # this is necessary because the 'shelve' objects don't behave
+                # *exactly* like a dict
                 self.objectCaches[category][adlibKey] = data
 
-            # sync after each category so the in-memory map doesn't get too heavy
+            # sync after each category so the in-memory map doesn't get too
+            # heavy
             cache.sync()
             tree.sync()
 
@@ -117,9 +128,9 @@ class DataExtractor_Adlib(DataExtractor):
         #     node.children = [node, node, ...]
         self.createParentChildStructure()
 
-
     def addRefToLinkedAgents(self, data, category):
-        # linked_agents[]: (objects OR collections) => (people OR organizations)
+        # linked_agents[]: (objects OR collections) => (people OR
+        # organizations)
         for linkedAgent in data.get('linked_agents', []):
             if 'ref' not in linkedAgent:
                 linkKey = adlibKeyFromUnicode(linkedAgent['title'])
@@ -136,21 +147,19 @@ class DataExtractor_Adlib(DataExtractor):
                 priref = self.objectCaches[linkCategory][linkKey]['id']
                 linkedAgent['ref'] = uriRef(linkCategory, priref)
 
-
     def createTreeNode(self, tree, data, nodeType, category):
         node = {
-                'id': data['id'],
-                'title': data['title'],
-                'level': data['level'],  # item/file/collection/etc
-                'adlib_key': data['adlib_key'],  # for traversing node > data
-                'category': category,  # for traversing node > data
-                'node_type': nodeType,
-                'jsonmodel_type': 'resource_tree',
-                'publish': True,
-                'children': [],
-                }
+            'id': data['id'],
+            'title': data['title'],
+            'level': data['level'],  # item/file/collection/etc
+            'adlib_key': data['adlib_key'],  # for traversing node > data
+            'category': category,  # for traversing node > data
+            'node_type': nodeType,
+            'jsonmodel_type': 'resource_tree',
+            'publish': True,
+            'children': [],
+        }
         tree[str(data['id'])] = node
-
 
     def createParentChildStructure(self):
         '''start at the top-level collections and recurse downward by 'parts_reference' links'''
@@ -164,14 +173,14 @@ class DataExtractor_Adlib(DataExtractor):
 
             self.createNodeChildren(node, data, 'collections')
 
-            # this is necessary for updates because the 'shelve' objects don't behave *exactly* like a dict
+            # this is necessary for updates because the 'shelve' objects don't
+            # behave *exactly* like a dict
             trees[data['id']] = node
 
         trees.sync()
 
         # TODO necessary?
         self.objectCaches['trees'] = trees
-
 
     def createNodeChildren(self, node, data, category):
         selfRef = {'ref': uriRef(category, data['id'])}
@@ -204,7 +213,6 @@ class DataExtractor_Adlib(DataExtractor):
 
             self.createNodeChildren(childNode, child, childCategory)
 
-
     def propagateDefaultExtentsToChildren(self):
         '''start at the top-level collections and recurse downward by 'parts_reference' links'''
         collections = self.objectCaches['collections']
@@ -212,9 +220,9 @@ class DataExtractor_Adlib(DataExtractor):
             data = collections[adlibKey]
 
             if data['level'] == 'collection':
-                # start the recursion process at the toplevel ('collection') nodes only
+                # start the recursion process at the toplevel ('collection')
+                # nodes only
                 self._propagateDefaultExtentsToChildren(data)
-
 
     def _propagateDefaultExtentsToChildren(self, data, default=[]):
         '''
@@ -223,61 +231,69 @@ class DataExtractor_Adlib(DataExtractor):
         '''
 
         # MERGE the default extents from parent record(s) with any other extents present
-        # NOTE: this will have no effect at the top (collection) level because default == []
+        # NOTE: this will have no effect at the top (collection) level because
+        # default == []
         data['extents'] = data.get('extents', []) + default
 
         # recurse to children
         # child = data > node > node.child > childData
         node = self.objectCaches['trees'][data['id']]
         for childNode in node['children']:
-            childData = self.objectCaches[childNode['category']][childNode['adlib_key']]
+            childData = self.objectCaches[childNode['category']
+                                          ][childNode['adlib_key']]
             self._propagateDefaultExtentsToChildren(childData, data['extents'])
 
-            # this is necessary because the 'shelve' objects don't behave *exactly* like a dict
-            self.objectCaches[childNode['category']][childNode['adlib_key']] = childData
-
+            # this is necessary because the 'shelve' objects don't behave
+            # *exactly* like a dict
+            self.objectCaches[childNode['category']
+                              ][childNode['adlib_key']] = childData
 
     def saveAllRecords(self):
-        logging.debug('Saving data from object cache into folder: %s...' % (config.DATA_DIR))
+        logging.debug(
+            'Saving data from object cache into folder: %s...' %
+            (config.DATA_DIR))
         for category in self.objectCaches:
             destination = config.destinations[category]
             makeDir(self.getDestinationDirname(destination))
             for adlibKey in self.objectCaches[category]:
                 data = self.objectCaches[category][adlibKey]
                 if category == 'trees' and data['level'] != 'collection':
-                    # trees are cached as a recursive node graph, so we only want to save the top-level nodes
+                    # trees are cached as a recursive node graph, so we only
+                    # want to save the top-level nodes
                     continue
                 self.saveFile(data['id'], data, destination)
 
-
-    ### Object-Extraction stuff ###
+    # Object-Extraction stuff
 
     def extractPeople(self):
-        searchTerm = 'name.type=person %s' % config.adlib.get('peoplefilter', '')
-        for data in self.getApiData(config.adlib['peopledb'], searchTerm=searchTerm.strip()):
+        searchTerm = 'name.type=person %s' % config.adlib.get(
+            'peoplefilter', '')
+        for data in self.getApiData(
+                config.adlib['peopledb'], searchTerm=searchTerm.strip()):
             result = self.getAgentData(data, 'person')
             self.cacheJson('people', result)
 
-
     def extractOrganizations(self):
-        searchTerm = 'name.type=inst %s' % config.adlib.get('institutionsfilter', '')
-        for data in self.getApiData(config.adlib['institutionsdb'], searchTerm=searchTerm.strip()):
+        searchTerm = 'name.type=inst %s' % config.adlib.get(
+            'institutionsfilter', '')
+        for data in self.getApiData(
+                config.adlib['institutionsdb'], searchTerm=searchTerm.strip()):
             result = self.getAgentData(data, 'inst')
             result['uri'] = uriRef('organizations', result['id'])
             self.cacheJson('organizations', result)
 
-
     def getAgentData(self, data, level):
         priref = prirefString(data['priref'][0])
 
-        # written this way because we want an exception if 'name' is not present for people/orgs
+        # written this way because we want an exception if 'name' is not
+        # present for people/orgs
         title = None
         for name in data['name']:
             # first non-empty name wins
-            if type(name) == str or type(name) == unicode:
+            if isinstance(name, str) or isinstance(name, str):
                 title = name
                 break
-            if type(name) == dict:
+            if isinstance(name, dict):
                 title = name['value'][0]
                 break
         if title is None:
@@ -304,30 +320,30 @@ class DataExtractor_Adlib(DataExtractor):
                   for n in data.get('biography', [])]
 
         dates = [{'expression': '%s - %s' % (data.get('birth.date.start', [''])[0],
-                                             data.get('death.date.start', [''])[0],
-                                             )
-                  }]
+                                             data.get(
+            'death.date.start', [''])[0],
+        )
+        }]
 
         preferred = False
         if 'name.status' in data:
             preferred = str(data['name.status'][0]['value'][0]) == '1'
 
         return {
-                'id': priref,
-                'adlib_key': adlibKey,
-                'level': level,
+            'id': priref,
+            'adlib_key': adlibKey,
+            'level': level,
 
-                'title': title,
-                'preferred': preferred,
-                'names': names,
-                'related_agents': relatedAgents,
-                'notes': notes,
-                'dates_of_existence': dates,
-                }
-
+            'title': title,
+            'preferred': preferred,
+            'names': names,
+            'related_agents': relatedAgents,
+            'notes': notes,
+            'dates_of_existence': dates,
+        }
 
     def getRelatedAgents(self, person, k):
-        return [{'_resolved':{'title': name},
+        return [{'_resolved': {'title': name},
                  'relator': k.replace('_', ' '),
                  # TODO
                  # 'dates':[{'expression':''}],
@@ -336,47 +352,51 @@ class DataExtractor_Adlib(DataExtractor):
                 for name in person.get(k, [])
                 ]
 
-
     def extractCollections(self):
-        searchTerm = 'description_level=collection %s' % config.adlib.get('collectionfilter', '')
-        for data in self.getApiData(config.adlib['collectiondb'], searchTerm=searchTerm.strip()):
+        searchTerm = 'description_level=collection %s' % config.adlib.get(
+            'collectionfilter', '')
+        for data in self.getApiData(
+                config.adlib['collectiondb'], searchTerm=searchTerm.strip()):
             result = self.getCollectionOrSeries(data)
             self.cacheJson('collections', result)
-
 
     def extractSubCollections(self):
-        searchTerm = 'description_level="sub-collection" %s' % config.adlib.get('collectionfilter', '')
-        for data in self.getApiData(config.adlib['collectiondb'], searchTerm=searchTerm.strip()):
+        searchTerm = 'description_level="sub-collection" %s' % config.adlib.get(
+            'collectionfilter', '')
+        for data in self.getApiData(
+                config.adlib['collectiondb'], searchTerm=searchTerm.strip()):
             result = self.getCollectionOrSeries(data)
             self.cacheJson('collections', result)
-
 
     def extractSeries(self):
-        searchTerm = 'description_level=series %s' % config.adlib.get('collectionfilter', '')
-        for data in self.getApiData(config.adlib['collectiondb'], searchTerm=searchTerm.strip()):
+        searchTerm = 'description_level=series %s' % config.adlib.get(
+            'collectionfilter', '')
+        for data in self.getApiData(
+                config.adlib['collectiondb'], searchTerm=searchTerm.strip()):
             result = self.getCollectionOrSeries(data)
             self.cacheJson('collections', result)
-
 
     def extractSubSeries(self):
-        searchTerm = 'description_level="sub-series" %s' % config.adlib.get('collectionfilter', '')
-        for data in self.getApiData(config.adlib['collectiondb'], searchTerm=searchTerm.strip()):
+        searchTerm = 'description_level="sub-series" %s' % config.adlib.get(
+            'collectionfilter', '')
+        for data in self.getApiData(
+                config.adlib['collectiondb'], searchTerm=searchTerm.strip()):
             result = self.getCollectionOrSeries(data)
             self.cacheJson('collections', result)
-
 
     def getCollectionOrSeries(self, data):
         priref = prirefString(data['priref'][0])
         adlibKey = adlibKeyFromUnicode(data['object_number'][0])
-        level = data['description_level'][0]['value'][0].lower()  # collection/series/etc.
+        # collection/series/etc.
+        level = data['description_level'][0]['value'][0].lower()
         hide = level != 'collection'  # only show top-level collections on the main page
 
         # NOTE: 'ref' is added later, in addRefToLinkedAgents()
-        linkedAgents = [{'title':creator, 'role':'creator'}
+        linkedAgents = [{'title': creator, 'role': 'creator'}
                         for creator in data.get('creator', [])
                         if creator
                         ]
-        linkedAgents += [{'title':name, 'role':'subject'}
+        linkedAgents += [{'title': name, 'role': 'subject'}
                          for name in data.get('content.person.name', [])
                          if name
                          ]
@@ -388,8 +408,11 @@ class DataExtractor_Adlib(DataExtractor):
         notes = [{'type': 'scopecontent',
                   'jsonmodel_type': 'note_singlepart',
                   # 2 note representations for each record:
-                  'subnotes':[{'content': n}],  # list format is compatible with 'scopecontent' type
-                  'content': n,  # single format is compatible with 'note_singlepart' (technically this isn't 'scopecontent' format)
+                  # list format is compatible with 'scopecontent' type
+                  'subnotes': [{'content': n}],
+                  # single format is compatible with 'note_singlepart'
+                  # (technically this isn't 'scopecontent' format)
+                  'content': n,
                   }
                  for n in data.get('content.description', [])]
 
@@ -404,59 +427,59 @@ class DataExtractor_Adlib(DataExtractor):
                     for d in data.get('dimension.free', [])]
 
         result = {
-                  'id': priref,
-                  'id_0': adlibKey,
-                  'adlib_key': adlibKey,
-                  'uri':  uriRef('collections', priref),
-                  'level': level,
-                  'linked_agents': linkedAgents,
-                  'parts_reference': [adlibKeyFromUnicode(r) for r in data.get('parts_reference', [])],
-                  'hide_on_main_page': hide,
-
-                  'title': data['title'][0],
-                  'dates': [{'expression': data.get('production.date.start', [''])[0]}],
-                  'extents': [],
-                  'notes': notes,
-                  'subjects': subjects,
-                  'extents': extents,
-                  }
+            'id': priref,
+            'id_0': adlibKey,
+            'adlib_key': adlibKey,
+            'uri': uriRef('collections', priref),
+            'level': level,
+            'linked_agents': linkedAgents,
+            'parts_reference': [adlibKeyFromUnicode(r) for r in data.get('parts_reference', [])],
+            'hide_on_main_page': hide,
+            'title': data['title'][0],
+            'dates': [{'expression': data.get('production.date.start', [''])[0]}],
+            'notes': notes,
+            'subjects': subjects,
+            'extents': extents,
+        }
 
         return result
 
-
     def extractFileLevelObjects(self):
-        searchTerm = 'description_level=file %s' % config.adlib.get('objectfilter', '')
-        for data in self.getApiData(config.adlib['collectiondb'], searchTerm=searchTerm.strip()):
+        searchTerm = 'description_level=file %s' % config.adlib.get(
+            'objectfilter', '')
+        for data in self.getApiData(
+                config.adlib['collectiondb'], searchTerm=searchTerm.strip()):
             result = self.getArchivalObject(data)
             self.cacheJson('objects', result)
-
 
     def extractItemLevelObjects(self):
-        searchTerm = 'description_level=item %s' % config.adlib.get('objectfilter', '')
-        for data in self.getApiData(config.adlib['collectiondb'], searchTerm=searchTerm.strip()):
+        searchTerm = 'description_level=item %s' % config.adlib.get(
+            'objectfilter', '')
+        for data in self.getApiData(
+                config.adlib['collectiondb'], searchTerm=searchTerm.strip()):
             result = self.getArchivalObject(data)
             self.cacheJson('objects', result)
-
 
     def getArchivalObject(self, data):
         priref = prirefString(data['priref'][0])
         try:
             adlibKey = adlibKeyFromUnicode(data['object_number'][0])
-        except:
+        except BaseException:
             adlibKey = None
 
         try:
             instances = [{
-                          'container.type_1': data['current_location.name'],
-                          'container.indicator_1':data.get('current_location', ''),
-                          'container.type_2':data.get('current_location.package.location', ''),
-                          'container.indicator_2':data.get('current_location.package.context', ''),
-                          }
-                         ]
-        except:
+                'container.type_1': data['current_location.name'],
+                'container.indicator_1': data.get('current_location', ''),
+                'container.type_2': data.get('current_location.package.location', ''),
+                'container.indicator_2': data.get('current_location.package.context', ''),
+            }
+            ]
+        except BaseException:
             instances = []
 
-        subjects = [{'title': subject} for subject in data.get('content.subject', [])]
+        subjects = [{'title': subject}
+                    for subject in data.get('content.subject', [])]
 
         notes = [{'type': 'note',
                   'jsonmodel_type': 'note_singlepart',
@@ -465,11 +488,11 @@ class DataExtractor_Adlib(DataExtractor):
                  for n in data.get('content.description', [])]
 
         # NOTE: 'ref' is added later, in addRefToLinkedAgents()
-        linkedAgents = [{'title':name, 'role':'subject'}
+        linkedAgents = [{'title': name, 'role': 'subject'}
                         for name in data.get('content.person.name', [])
                         if name
                         ]
-        linkedAgents += [{'title':creator, 'role':'creator'}
+        linkedAgents += [{'title': creator, 'role': 'creator'}
                          for creator in data.get('creator', [])
                          if creator
                          ]
@@ -483,35 +506,36 @@ class DataExtractor_Adlib(DataExtractor):
         elif 'object_name' in data:
             title = data['object_name'][0]
         else:
-            logging.error('No title or object_name found for %s with ID %s' % (level, priref))
+            logging.error(
+                'No title or object_name found for %s with ID %s' %
+                (level, priref))
             title = ''
 
         result = {
-                  'id': priref,
-                  'adlib_key': adlibKey,
-                  'level': level,
-                  'linked_agents': linkedAgents,
-                  'parts_reference': [adlibKeyFromUnicode(r) for r in data.get('parts_reference', [])],
+            'id': priref,
+            'adlib_key': adlibKey,
+            'level': level,
+            'linked_agents': linkedAgents,
+            'parts_reference': [adlibKeyFromUnicode(r) for r in data.get('parts_reference', [])],
 
-                  'title': title,
-                  'display_string': title,
-                  'instances': instances,
-                  'subjects': subjects,
-                  'notes': notes,
-                  'dates': [{'expression':data.get('production.date.start', '')}],
-                  }
+            'title': title,
+            'display_string': title,
+            'instances': instances,
+            'subjects': subjects,
+            'notes': notes,
+            'dates': [{'expression': data.get('production.date.start', '')}],
+        }
         return result
-
 
     def getApiData(self, database, searchTerm=''):
         if self.update:
             lastExport = datetime.fromtimestamp(self.get_last_export_time())
-            searchTerm += ' modification greater "%4d-%02d-%02d"' % (lastExport.year, lastExport.month, lastExport.day)
+            searchTerm += ' modification greater "%4d-%02d-%02d"' % (
+                lastExport.year, lastExport.month, lastExport.day)
         elif not searchTerm or searchTerm.strip() == '':
             searchTerm = 'all'
 
         return self._getApiData(database, searchTerm)
-
 
     def _getApiData(self, database, searchTerm):
         startFrom = 1
@@ -524,7 +548,7 @@ class DataExtractor_Adlib(DataExtractor):
                                                 startFrom + config.ROW_FETCH_LIMIT,
                                                 )
                                                )
-                                )
+                            )
 
             rawJson = None
             if self.READ_FROM_RAW_DUMP:
@@ -532,11 +556,11 @@ class DataExtractor_Adlib(DataExtractor):
                     logging.info('Loading from %s...' % filename)
                     with open(filename, 'r') as fp:
                         rawJson = load(fp)
-                except:
+                except BaseException:
                     logging.info('Loading from %s failed.' % filename)
 
             if rawJson is None and not self.READ_FROM_ADLIB_API:
-                rawJson = {'adlibJSON':{'recordList':{'record':[]}}}
+                rawJson = {'adlibJSON': {'recordList': {'record': []}}}
 
             if rawJson is None:
                 logging.info('Fetching %s:%s records %d-%d...' % (database,
@@ -544,16 +568,18 @@ class DataExtractor_Adlib(DataExtractor):
                                                                   startFrom,
                                                                   startFrom + config.ROW_FETCH_LIMIT))
                 url = '%s?database=%s&search=%s&xmltype=structured&limit=%d&startfrom=%d&output=json' % (config.adlib['baseurl'],
-                                                                                                      database,
-                                                                                                      searchTerm.strip(),
-                                                                                                      config.ROW_FETCH_LIMIT,
-                                                                                                      startFrom)
+                                                                                                         database,
+                                                                                                         searchTerm.strip(),
+                                                                                                         config.ROW_FETCH_LIMIT,
+                                                                                                         startFrom)
                 try:
                     logging.info("GET " + url)
                     response = requests.get(url)
                     rawJson = response.json()
                 except Exception as e:
-                    logging.error("Exception while retrieving URL %s: %s" % (url, e))
+                    logging.error(
+                        "Exception while retrieving URL %s: %s" %
+                        (url, e))
                     return
 
             if self.DUMP_RAW_DATA:
@@ -569,10 +595,8 @@ class DataExtractor_Adlib(DataExtractor):
             for record in records:
                 yield record
 
-
     def cacheFilename(self, category):
         return join(config.OBJECT_CACHE_DIR, category)
-
 
     def clearCache(self):
         for category in self.objectCaches:
@@ -582,22 +606,24 @@ class DataExtractor_Adlib(DataExtractor):
                 remove(self.cacheFilename(category))
         self.objectCaches = {}
 
-
     def cacheJson(self, category, data):
         if category not in self.objectCaches:
             makeDir(config.OBJECT_CACHE_DIR)
-            self.objectCaches[category] = shelve.open(self.cacheFilename(category))
+            self.objectCaches[category] = shelve.open(
+                self.cacheFilename(category))
         collection = self.objectCaches[category]
 
         adlibKey = data['adlib_key']
         if adlibKey in collection:
             # 'preferred' names can supersede non-preferred ones.
             if data.get('preferred'):
-                msg = '''Duplicate object '%s/%s' is superseding an existing one in the JSON cache because it is marked as 'preferred'.''' % (category, adlibKey)
+                msg = '''Duplicate object '%s/%s' is superseding an existing one in the JSON cache because it is marked as 'preferred'.''' % (
+                    category, adlibKey)
                 collection[adlibKey] = data
                 logging.warn(msg)
             else:
-                msg = '''Refusing to insert duplicate object '%s/%s' into JSON cache.''' % (category, adlibKey)
+                msg = '''Refusing to insert duplicate object '%s/%s' into JSON cache.''' % (
+                    category, adlibKey)
                 logging.error(msg)
         else:
             collection[adlibKey] = data
@@ -614,7 +640,11 @@ class DataExtractor_Adlib_Fake(DataExtractor_Adlib):
     def _getApiData(self, database, searchTerm):
 
         def jsonFileContents(sampleDataType):
-            filename = join(config.SAMPLE_DATA_DIR, 'adlib', '%s.json' % sampleDataType)
+            filename = join(
+                config.SAMPLE_DATA_DIR,
+                'adlib',
+                '%s.json' %
+                sampleDataType)
             data = load(open(filename))
             return data
 
@@ -647,7 +677,9 @@ class DataExtractor_Adlib_Fake(DataExtractor_Adlib):
             result = jsonFileContents('item')
 
         else:
-            raise Exception('''Please create a mock JSON config for getApiData('%s', '%s')!''' % (database, searchTerm))
+            raise Exception(
+                '''Please create a mock JSON config for getApiData('%s', '%s')!''' %
+                (database, searchTerm))
         # we actually return the contents of adlibJSON > recordList > record
         # return {'adlibJSON': {'recordList': {'record': data}}}
         return result

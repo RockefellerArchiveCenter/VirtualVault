@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
+from argparse import ArgumentParser
+from datetime import datetime
 from os import listdir, symlink
 from os.path import exists, isdir, join, splitext
 from shutil import copyfile, copytree
-from datetime import datetime
 
 from static_aid import config, utils
-from argparse import ArgumentParser
-
 
 DESCRIPTION_NOTE_TYPES = ['abstract', 'scopecontent', 'bioghist', 'general']
 
@@ -79,9 +78,11 @@ def make_pages(category):
     page_uris = []
     source_data_dir = join(config.DATA_DIR, config.destinations[category])
     if exists(source_data_dir):
-        page_data_dir = utils.create_directory(join(config.STAGING_DIR, category))
+        page_data_dir = utils.create_directory(
+            join(config.STAGING_DIR, category))
 
-        for filename in [f for f in listdir(source_data_dir) if f.endswith(".json")]:
+        for filename in [f for f in listdir(
+                source_data_dir) if f.endswith(".json")]:
             data = utils.load_json(join(source_data_dir, filename))
 
             identifier = splitext(filename)[0]
@@ -106,16 +107,21 @@ def make_pages(category):
                 new_file.write("id: %s\n" % identifier)
                 new_file.write("type: %s\n" % category)
                 new_file.write("permalink: %s/%s/\n" % (category, identifier))
-                new_file.write("description: \"%s\"\n" % ''.join(raw_description))
+                new_file.write(
+                    "description: \"%s\"\n" %
+                    ''.join(raw_description))
                 new_file.write("---")
 
-            page_uris.append("{}/{}/{}".format(config.site["url"], category, identifier))
+            page_uris.append(
+                "{}/{}/{}".format(config.site["url"], category, identifier))
     return page_uris
+
 
 def link_assets():
     if (config.assets['src'] and config.assets['dest']):
-        if not(isdir(config.assets['dest'])):
+        if not (isdir(config.assets['dest'])):
             symlink(config.assets['src'], config.assets['dest'])
+
 
 def main():
     parser = ArgumentParser(description='StaticAid Page Generator')
@@ -134,6 +140,7 @@ def main():
         site_urls += make_pages(category)
     create_sitemap(site_urls)
     create_site_config()
+
 
 if __name__ == '__main__':
     main()
