@@ -21,10 +21,13 @@ aspace_vcr = vcr.VCR(
 
 
 @pytest.fixture()
-def configure_dirs():
+def configure_dirs(monkeypatch):
     utils.remove_file_or_dir(config.DATA_DIR)
     DataExtractor().make_destinations()
     utils.remove_file_or_dir(config.PID_FILE_PATH)
+    monkeypatch.setenv("AS_USERNAME", "admin")
+    monkeypatch.setenv("AS_PASSWORD", "admin")
+    monkeypatch.setenv("AS_BASEURL", "http://sandbox.archivespace.org/api")
     yield
     utils.remove_file_or_dir(config.PID_FILE_PATH)
     for k in config.destinations:

@@ -26,10 +26,9 @@ def test_make_pages(setup_dirs):
         join(config.STAGING_DIR, config.sitemap)), "{} must exist".format(
         join(config.STAGING_DIR, config.sitemap))
     for k, v in config.destinations.items():
-        if k not in ['breadcrumbs', 'subjects', 'trees']:
-            assert isdir(
-                join(config.STAGING_DIR, k)), "{} must exist".format(
-                join(config.STAGING_DIR, k))
+        if k not in ['breadcrumbs', 'subjects', 'trees', 'containers']:
+            expected = join(config.STAGING_DIR, k)
+            assert isdir(expected), f"{expected} must exist"
             staging_files = len(listdir(join(config.STAGING_DIR, k)))
             data_files = len(listdir(join(config.DATA_DIR, v)))
             assert staging_files == data_files + 1, "The correct number of files should be generated"

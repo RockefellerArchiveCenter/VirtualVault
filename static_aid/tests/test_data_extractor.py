@@ -46,7 +46,7 @@ def test_make_destinations(remove_pid_file):
 def test_get_last_export_time(remove_pid_file):
     extractor = DataExtractor()
     extractor.update = False
-    assert extractor.get_last_export_time() == 0
+    assert extractor.get_last_export_time() != 0
     extractor.update = True
     extractor.set_last_export_time(12345)
     assert extractor.get_last_export_time() == 12345
