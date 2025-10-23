@@ -1,10 +1,11 @@
 from configparser import ConfigParser, NoSectionError
-from os.path import join, exists, realpath, curdir, dirname
+from os.path import curdir, dirname, exists, join, realpath
 from shutil import copyfile
 
-### Application constants - these are not exposed to users via config files ###
+# Application constants - these are not exposed to users via config files
 
-# NOTE: Directories must match Gruntfile.js: jekyll > (serve|build) > options > (src|dest)
+# NOTE: Directories must match Gruntfile.js: jekyll > (serve|build) >
+# options > (src|dest)
 ROOT = realpath(curdir)
 CONFIG_DEFAULTS_FILE_PATH = join(ROOT, 'local_settings.default')
 if not exists(CONFIG_DEFAULTS_FILE_PATH):
@@ -21,7 +22,8 @@ BUILD_DIR = join(ROOT, 'build')
 DATA_DIR = join(BUILD_DIR, 'data')
 STAGING_DIR = join(BUILD_DIR, 'staging')
 RAW_DATA_DIR = join(BUILD_DIR, 'raw')
-SITE_BUILD_DIR = join(BUILD_DIR, 'site')  # must match 'dest' settings in Gruntfile.js
+# must match 'dest' settings in Gruntfile.js
+SITE_BUILD_DIR = join(BUILD_DIR, 'site')
 
 # temp dir
 TEMP_DIR = join(BUILD_DIR, 'tmp')
@@ -30,11 +32,13 @@ OBJECT_CACHE_DIR = join(TEMP_DIR, 'object_cache')
 
 ROW_FETCH_LIMIT = 100
 
+
 def _configSection(section):
     try:
-        return {k:v for k, v in _config.items(section, raw=True)}
+        return {k: v for k, v in _config.items(section, raw=True)}
     except NoSectionError:
         return {}
+
 
 def _stringToBoolean(string):
     if string is None:
@@ -46,18 +50,20 @@ def _stringToBoolean(string):
               '1': True,
               'false': False,
               'f': False,
-              '0':False,
+              '0': False,
               }
     if k in result:
         return result[k]
     return None
+
 
 def _stringToList(string):
     if string is None:
         return None
     return [i.strip() for i in string.strip().split(',')]
 
-### Config file values ###
+# Config file values
+
 
 # read the config file
 if not exists(CONFIG_FILE_PATH) and not exists(CONFIG_DEFAULTS_FILE_PATH):
@@ -76,12 +82,14 @@ _config.read(CONFIG_FILE_PATH)
 
 
 # Extract the config values - reference these in calling code
-# NOTE: keys from config files are forced to lower-case when they are read by ConfigParser
+# NOTE: keys from config files are forced to lower-case when they are read
+# by ConfigParser
 
 # which extractor backend to use for loading data
 dataExtractor = _configSection('DataExtractor')
 # set DEFAULT value if necessary
-dataExtractor['dataSource'] = dataExtractor.get('datasource', 'DEFAULT').lower()
+dataExtractor['dataSource'] = dataExtractor.get(
+    'datasource', 'DEFAULT').lower()
 
 # baseurl, repository, user, password
 archivesSpace = _configSection('ArchivesSpace')

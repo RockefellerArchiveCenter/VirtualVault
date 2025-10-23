@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 
 import logging
-from os.path import join, exists, isfile, dirname
-from os import getpid, makedirs
 import pickle
-from psutil import pid_exists
+from json import dump
+from os import getpid, makedirs
+from os.path import dirname, exists, isfile, join
 from sys import exit
 from time import time
-from json import dump
+
+from psutil import pid_exists
 
 from static_aid import config, utils
 
@@ -67,9 +68,9 @@ class DataExtractor(object):
             try:
                 with open(config.lastExportFilepath, 'rb') as pickle_handle:
                     return int(str(pickle.load(pickle_handle)))
-            except:
+            except BaseException:
                 pass
-        return int(time()) # Return the current time.
+        return int(time())  # Return the current time.
 
     def set_last_export_time(self, start_time):
         """Store the current time in Unix epoch time, for example 1439563523."""
@@ -84,7 +85,10 @@ class DataExtractor(object):
 
     def save_data_file(self, identifier, data, destination_dir):
         """Saves JSON data to a file location"""
-        filename = join(config.DATA_DIR, destination_dir, '{}.json'.format(identifier))
+        filename = join(
+            config.DATA_DIR,
+            destination_dir,
+            '{}.json'.format(identifier))
         with open(filename, 'w') as fp:
             dump(data, fp, indent=4, sort_keys=True)
         logging.debug('ID %s exported to %s', identifier, filename)
