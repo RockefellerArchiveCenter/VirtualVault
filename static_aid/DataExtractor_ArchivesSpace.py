@@ -46,8 +46,7 @@ class DataExtractor_ArchivesSpace(DataExtractor):
                                     config.destinations[dir.name])
 
                 resource_id = data['resource']['ref'].split("/")[-1]
-                if not Path(
-                        config.destinations['collections'], f"{resource_id}.json").is_file():
+                if not Path(config.destinations['collections'], f"{resource_id}.json").is_file():
                     resource = self.aspace.client.get(
                         data['resource']['ref']).json()
                     self.save_data_file(
