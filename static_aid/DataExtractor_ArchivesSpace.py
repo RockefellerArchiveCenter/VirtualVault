@@ -41,34 +41,35 @@ class DataExtractor_ArchivesSpace(DataExtractor):
             # Save new data
             for r in new_refids:
                 data = self.get_object_by_id(r)
-                archival_object_id = data['uri'].split("/")[-1]
-                self.save_data_file(archival_object_id, data,
-                                    config.destinations[dir.name])
+                if data:
+                    archival_object_id = data['uri'].split("/")[-1]
+                    self.save_data_file(archival_object_id, data,
+                                        config.destinations[dir.name])
 
-                resource_id = data['resource']['ref'].split("/")[-1]
-                if not Path(config.destinations['collections'], f"{resource_id}.json").is_file():
-                    resource = self.aspace.client.get(
-                        data['resource']['ref']).json()
-                    self.save_data_file(
-                        resource_id, resource, config.destinations['collections'])
-
-                if data.get('parent'):
-                    parent_id = data['parent']['ref'].split("/")[-1]
-                    if not Path(
-                            config.destinations['objects'], f"{parent_id}.json").is_file():
-                        parent = self.aspace.client.get(
-                            data['parent']['ref']).json()
+                    resource_id = data['resource']['ref'].split("/")[-1]
+                    if not Path(config.destinations['collections'], f"{resource_id}.json").is_file():
+                        resource = self.aspace.client.get(
+                            data['resource']['ref']).json()
                         self.save_data_file(
-                            parent_id, parent, config.destinations['objects'])
+                            resource_id, resource, config.destinations['collections'])
 
-                for container in data['instances']:
-                    if container.get('sub_container'):
-                        container_uri = container['sub_container']['top_container']['ref']
-                        container_id = container_uri.split("/")[-1]
-                        container = self.aspace.client.get(
-                            container_uri).json()
-                        self.save_data_file(
-                            container_id, container, config.destinations['containers'])
+                    if data.get('parent'):
+                        parent_id = data['parent']['ref'].split("/")[-1]
+                        if not Path(
+                                config.destinations['objects'], f"{parent_id}.json").is_file():
+                            parent = self.aspace.client.get(
+                                data['parent']['ref']).json()
+                            self.save_data_file(
+                                parent_id, parent, config.destinations['objects'])
+
+                    for container in data['instances']:
+                        if container.get('sub_container'):
+                            container_uri = container['sub_container']['top_container']['ref']
+                            container_id = container_uri.split("/")[-1]
+                            container = self.aspace.client.get(
+                                container_uri).json()
+                            self.save_data_file(
+                                container_id, container, config.destinations['containers'])
 
     def find_tree(self, identifier):
         """Fetches a tree for a resource."""
@@ -193,6 +194,8 @@ class DataExtractor_ArchivesSpace(DataExtractor):
         resp = self.aspace.client.get(
             f"/repositories/{config.archivesSpace['repository']}/find_by_id/archival_objects?ref_id[]={refid}").json()
         if len(resp['archival_objects']) != 1:
-            raise Exception(f'Got more than one result for refid {refid}')
-        return self.aspace.client.get(
-            resp['archival_objects'][0]['ref']).json()
+            logging.info(f"Did not get exactly one result for refid {refid}: {resp}")
+            return None
+        else:
+            return self.aspace.client.get(
+                resp['archival_objects'][0]['ref']).json()
