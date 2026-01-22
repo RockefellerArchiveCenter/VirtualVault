@@ -8,7 +8,7 @@ $(document).ready(function() {
       $.getJSON("/"+searchType+"_search_data.json", function(documents){
         for (r in results) {  // Iterate over the results
           let item = documents[results[r].ref];
-          appendString += '<tr><td><p class="lead mb-1"><a href="'+item.url+'" onclick="ga(\'send\', \'event\', \''+category+'\', \'view\', \''+item.title+'\');">'+item.title+'</a> <small>'+item.avnumber+'</small></p><p class="text-muted mb-0">'+item.collection+'</p></td></tr>';
+          appendString += '<tr><td><p class="lead mb-1"><a href="'+item.url+'">'+item.title+'</a> <small>'+item.avnumber+'</small></p><p class="text-muted mb-0">'+item.collection+'</p></td></tr>';
         }
         appendString += '</tbody></table>'
         $('#results').append(appendString);
