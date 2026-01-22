@@ -31,7 +31,7 @@ $(document).ready(function() {
   }
 
   let searchTerm = getQueryVariable('q');
-  let searchType = $('form').attr('action').substring(1);
+  let searchType = $('form').attr('action').replace(/\//g, '');
 
   if (searchTerm) {
     $('#results').empty().append('<img class="mx-auto d-block" src="/img/loading.gif" />')
