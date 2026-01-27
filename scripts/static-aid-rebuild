@@ -1,8 +1,11 @@
 #!/bin/sh
 
+set -e
+
 cd /code/
 
 static-aid-get-data --replace
 static-aid-make-pages
 bundle exec jekyll build --incremental -d build/site -s build/staging
 static-aid-link-assets
+node build/site/js/create-index.js
