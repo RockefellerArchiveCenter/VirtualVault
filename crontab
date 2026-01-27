@@ -1,0 +1,2 @@
+SHELL=/bin/sh
+0 0 * * * static-aid-update >> /var/log/cron/update-site.log 2>&1
