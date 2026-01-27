@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
 set -e
 
 static-aid-build
-service cron start
-apachectl -D FOREGROUND
+crond -b
+httpd -D FOREGROUND
