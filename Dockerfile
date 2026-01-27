@@ -1,31 +1,41 @@
-FROM ubuntu:22.04 AS base
+FROM python:3.12-alpine
 
-ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+ENV APPLICATION_NAME=virtualvault
 
-RUN apt-get -y update && apt-get -y install \
-    cron \
+RUN apk add --no-cache \
     make \
     gcc \
+    musl-dev \
+    linux-headers \
+    build-base \
     apache2 \
-    python3-pip \
+    python3 \
+    python3-dev \
     ruby \
-    ruby-dev
+    ruby-dev \
+    nodejs \
+    npm \
+    sassc
 
 WORKDIR /code
 
 COPY requirements.txt Gemfile ./
 RUN pip install -r requirements.txt
-RUN gem install bundler && bundler install
+RUN gem install bundler && bundle install
+RUN npm install lunr
 
-COPY apache/apache2.conf /etc/apache2/sites-enabled/000-default.httpd.conf
-RUN (crontab -l 2>/dev/null; echo "0 0 * * * static-aid-update >> /var/log/cron/update-site.log 2>&1\n") | crontab -
-RUN mkdir -p /var/log/cron && touch /var/log/cron/update-site.log
+RUN find /etc/apache2/conf.d/ -type f -name "*.conf" -print0 | xargs -0 -I {} mv {} {}.disabled
+COPY ./apache/${APPLICATION_NAME}.conf /etc/apache2/conf.d/${APPLICATION_NAME}.conf
+
+COPY crontab /etc/crontabs/root
 
 COPY scripts/* /usr/local/bin/
 COPY local_settings.default entrypoint.sh setup.py ./
 COPY static_aid ./static_aid
 COPY site ./site
 
+RUN pip install setuptools
 RUN python3 setup.py install
 
 EXPOSE 4000
