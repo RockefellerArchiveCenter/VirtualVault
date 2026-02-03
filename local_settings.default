@@ -105,3 +105,6 @@ parentsameas:
 
 # root URL for your website
 url:
+
+# website title
+title: Virtual Vault
