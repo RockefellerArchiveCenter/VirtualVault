@@ -48,7 +48,7 @@ format: %(asctime)s %(message)s
 datefmt: %m/%d/%Y %I:%M:%S %p
 
 [LastExport]
-filepath: lastExport.pickle
+filepath: config/lastExport.pickle
 
 [Site]
 # Enter global values for your StaticAid site's JSON LD object here

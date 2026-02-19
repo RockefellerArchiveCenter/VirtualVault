@@ -7,13 +7,13 @@ from shutil import copyfile
 # NOTE: Directories must match Gruntfile.js: jekyll > (serve|build) >
 # options > (src|dest)
 ROOT = realpath(curdir)
-CONFIG_DEFAULTS_FILE_PATH = join(ROOT, 'local_settings.default')
+CONFIG_DEFAULTS_FILE_PATH = join(ROOT, 'config', 'local_settings.default')
 if not exists(CONFIG_DEFAULTS_FILE_PATH):
     # probably because we're debugging directly (PWD = dirname(__file__))
     ROOT = realpath(join(dirname(__file__), '..'))
-    CONFIG_DEFAULTS_FILE_PATH = join(ROOT, 'local_settings.default')
+    CONFIG_DEFAULTS_FILE_PATH = join(ROOT, 'config', 'local_settings.default')
 
-CONFIG_FILE_PATH = join(ROOT, 'local_settings.cfg')
+CONFIG_FILE_PATH = join(ROOT, 'config', 'local_settings.cfg')
 SAMPLE_DATA_DIR = join(ROOT, 'data')
 SITE_SRC_DIR = join(ROOT, 'site')
 

@@ -3,10 +3,11 @@ services:
     build: .
     entrypoint: /code/entrypoint.sh
     volumes:
-      - /mnt/assets:/assets
+      - ./assets:/assets
+      - ./config:/code/config
     ports:
       - '4000:4000'
     environment:
-      - AS_USERNAME=admin
+      - AS_USERNAME=admin 
       - AS_PASSWORD=admin
       - AS_BASEURL=https://sandbox.archivesspace.org/api

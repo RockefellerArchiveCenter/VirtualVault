@@ -31,7 +31,7 @@ COPY ./apache/${APPLICATION_NAME}.conf /etc/apache2/conf.d/${APPLICATION_NAME}.c
 COPY crontab /etc/crontabs/root
 
 COPY scripts/* /usr/local/bin/
-COPY local_settings.default entrypoint.sh setup.py ./
+COPY entrypoint.sh setup.py ./
 COPY static_aid ./static_aid
 COPY site ./site
 
