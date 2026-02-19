@@ -2,6 +2,6 @@
 
 set -e
 
-static-aid-build
+static-aid-update
 crond -b
 httpd -D FOREGROUND
