@@ -28,6 +28,7 @@ RUN npm install lunr
 RUN find /etc/apache2/conf.d/ -type f -name "*.conf" -print0 | xargs -0 -I {} mv {} {}.disabled
 COPY ./apache/${APPLICATION_NAME}.conf /etc/apache2/conf.d/${APPLICATION_NAME}.conf
 
+RUN mkdir -p /var/log/cron
 COPY crontab /etc/crontabs/root
 
 COPY scripts/* /usr/local/bin/
