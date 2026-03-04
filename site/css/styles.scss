@@ -1,8 +1,8 @@
 ---
 ---
 
-@import "bootstrap/bootstrap";
-@import "bootstrap";
+@use "bootstrap/bootstrap" as *;
+@use "bootstrap" as *;
 
 /* custom */
-@import "custom";
+@use "custom" as *;

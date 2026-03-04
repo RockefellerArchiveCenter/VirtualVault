@@ -33,6 +33,10 @@ def create_site_config():
                 yaml.write(": ")
                 yaml.write(config.site[i])
                 yaml.write("\n")
+        yaml.write("sass:")
+        yaml.write("\n")
+        yaml.write("  quiet_deps: true")
+        yaml.write("\n")
 
 
 def create_initial_structure(embedded):
