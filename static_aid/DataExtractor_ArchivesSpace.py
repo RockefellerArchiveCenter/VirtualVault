@@ -30,7 +30,7 @@ class DataExtractor_ArchivesSpace(DataExtractor):
                 config.assets['src']).iterdir() if d.is_dir()]
 
         for dir in category_dirs:
-            refids, new_refids = self.get_refids_from_files(dir)
+            refids, new_refids = self.get_refids_from_files(dir, last_export)
 
             # Save updated data
             for obj in [u for u in updated_objects if u['ref_id'] in refids]:
@@ -168,16 +168,17 @@ class DataExtractor_ArchivesSpace(DataExtractor):
                 self.remove_data_file(
                     subject_id, config.destinations['subjects'])
 
-    def get_refids_from_files(self, dir):
+    def get_refids_from_files(self, dir, last_export):
         refids = []
         new_refids = []
         if dir.is_dir():
             for fp in dir.iterdir():
-                print(fp)
                 if fp.is_dir() and len(fp.name) == 32:
                     refids.append(fp.stem)
-                    if not Path(config.DATA_DIR, dir.name,
-                                f'{fp.stem}.json').exists():
+                    created_time = fp.stat().st_ctime
+                    print(created_time, last_export)
+                    if created_time >= last_export:
+                        print("new file", fp)
                         new_refids.append(fp.stem)
         return refids, new_refids
 

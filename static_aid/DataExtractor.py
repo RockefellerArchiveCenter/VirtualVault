@@ -64,13 +64,11 @@ class DataExtractor(object):
 
     def get_last_export_time(self):
         """Returns last export time in Unix epoch time, for example 1439563523."""
-        if self.update:
-            try:
-                with open(config.lastExportFilepath, 'rb') as pickle_handle:
-                    return int(str(pickle.load(pickle_handle)))
-            except BaseException:
-                pass
-        return int(time())  # Return the current time.
+        try:
+            with open(config.lastExportFilepath, 'rb') as pickle_handle:
+                return int(str(pickle.load(pickle_handle)))
+        except BaseException:
+            return int(time())  # Return the current time.
 
     def set_last_export_time(self, start_time):
         """Store the current time in Unix epoch time, for example 1439563523."""
