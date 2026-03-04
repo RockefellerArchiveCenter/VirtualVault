@@ -176,9 +176,7 @@ class DataExtractor_ArchivesSpace(DataExtractor):
                 if fp.is_dir() and len(fp.name) == 32:
                     refids.append(fp.stem)
                     created_time = fp.stat().st_ctime
-                    print(created_time, last_export)
                     if created_time >= last_export:
-                        print("new file", fp)
                         new_refids.append(fp.stem)
         return refids, new_refids
 
