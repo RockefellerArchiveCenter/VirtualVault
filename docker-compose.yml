@@ -5,6 +5,7 @@ services:
     volumes:
       - ./assets:/assets
       - ./config:/code/config
+      - ./data:/code/build/data
     ports:
       - '4000:4000'
     environment:
