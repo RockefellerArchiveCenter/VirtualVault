@@ -26,7 +26,7 @@ class DataExtractor(object):
         logging.info('\n*** Export started ***')
 
         start_time = int(time())
-        utils.remove_file_or_dir(config.DATA_DIR)
+        # utils.remove_file_or_dir(config.DATA_DIR)
         self._run()
         self.set_last_export_time(start_time)
 

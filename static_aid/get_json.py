@@ -3,7 +3,7 @@
 import logging
 from argparse import ArgumentParser
 
-from static_aid import config, utils
+from static_aid import config
 from static_aid.DataExtractor_Adlib import (DataExtractor_Adlib,
                                             DataExtractor_Adlib_Fake)
 from static_aid.DataExtractor_ArchivesSpace import DataExtractor_ArchivesSpace
@@ -37,8 +37,8 @@ def main():
 
     arguments = parser.parse_args()
 
-    if arguments.replace:
-        utils.remove_file_or_dir(config.DATA_DIR)
+    # if arguments.replace:
+    #     utils.remove_file_or_dir(config.DATA_DIR)
 
     extractorClass = DATA_SOURCE_EXTRACTORS.get(
         config.dataExtractor['dataSource'])
