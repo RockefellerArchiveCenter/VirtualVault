@@ -41,7 +41,7 @@ def create_site_config():
 
 def create_initial_structure(embedded):
     """Creates the initial structure for the staged site."""
-    utils.remove_file_or_dir(config.STAGING_DIR)
+    # utils.remove_file_or_dir(config.STAGING_DIR)
     utils.create_directory(config.BUILD_DIR)
 
     copytree(config.SITE_SRC_DIR, config.STAGING_DIR)
