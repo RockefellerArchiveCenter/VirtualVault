@@ -44,7 +44,7 @@ def create_initial_structure(embedded):
     # utils.remove_file_or_dir(config.STAGING_DIR)
     utils.create_directory(config.BUILD_DIR)
 
-    copytree(config.SITE_SRC_DIR, config.STAGING_DIR)
+    copytree(config.SITE_SRC_DIR, config.STAGING_DIR, dirs_exist_ok=True)
 
     # copy the appropriate 'default' template, according to whether or not we are
     # building embedded content
@@ -57,7 +57,7 @@ def create_initial_structure(embedded):
 
     # copy _data into place so that JSON is available to the Liquid templates
     if exists(config.DATA_DIR):
-        copytree(config.DATA_DIR, join(config.STAGING_DIR, '_data'))
+        copytree(config.DATA_DIR, join(config.STAGING_DIR, '_data'), dirs_exist_ok=True)
 
 
 def get_note_content(note):
