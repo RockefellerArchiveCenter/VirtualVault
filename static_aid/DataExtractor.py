@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import logging
-import pickle
 from json import dump
 from os import getpid, makedirs
 from os.path import dirname, exists, isfile, join
@@ -65,15 +64,15 @@ class DataExtractor(object):
     def get_last_export_time(self):
         """Returns last export time in Unix epoch time, for example 1439563523."""
         try:
-            with open(config.lastExportFilepath, 'rb') as pickle_handle:
-                return int(str(pickle.load(pickle_handle)))
+            with open(config.lastExportFilepath, 'r') as fp:
+                return int(fp.read())
         except BaseException:
-            return int(time())  # Return the current time.
+            return 0
 
     def set_last_export_time(self, start_time):
         """Store the current time in Unix epoch time, for example 1439563523."""
-        with open(config.lastExportFilepath, 'wb') as pickle_handle:
-            pickle.dump(start_time, pickle_handle)
+        with open(config.lastExportFilepath, 'w') as fp:
+            fp.write(str(start_time))
         logging.info('Last export time updated to {}'.format(start_time))
 
     def remove_data_file(self, identifier, destination):
