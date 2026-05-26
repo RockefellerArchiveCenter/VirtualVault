@@ -79,7 +79,7 @@ class DataExtractor_ArchivesSpace(DataExtractor):
                         new_refids.append(fp.stem)
         return refids, new_refids
 
-    def list_chunks(self, lst, n=30):
+    def list_chunks(self, lst, n=150):
         for i in range(0, len(lst), n):
             yield lst[i:i + n]
 
