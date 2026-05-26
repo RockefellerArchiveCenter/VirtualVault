@@ -1,6 +1,5 @@
 import json
 import logging
-from datetime import datetime
 from os import getenv
 from pathlib import Path
 
@@ -74,6 +73,7 @@ class DataExtractor_ArchivesSpace(DataExtractor):
             for fp in dir.iterdir():
                 if fp.is_dir() and len(fp.name) == 32:
                     refids.append(fp.stem)
+                    # TODO this is not working like it should.
                     created_time = fp.stat().st_ctime
                     if created_time >= last_export:
                         new_refids.append(fp.stem)
@@ -86,13 +86,14 @@ class DataExtractor_ArchivesSpace(DataExtractor):
     def get_updated_data(self, refid_list, last_export):
         """Returns results for a list of refids modified after a given date"""
         refid_value = " OR ".join(refid_list)
-        if last_export:
-            last_export_datetime = datetime.fromtimestamp(last_export)
-            last_export_datestring = last_export_datetime.strftime('%Y-%m-%dT%H:%M:%SZ')
-            query = json.dumps({"query": {"jsonmodel_type": "range_query", "field": "system_mtime", "from": last_export_datestring}})
-            url = f'/repositories/2/search?q=refid:{refid_value}&filter={query}&fields[]=json&page=1'
-        else:
-            url = f'/repositories/2/search?q=refid:{refid_value}&fields[]=json&page=1'
+        # TODO fetching all the data all the time to see if we can simplify things.
+        # if last_export:
+        #     last_export_datetime = datetime.fromtimestamp(last_export)
+        #     last_export_datestring = last_export_datetime.strftime('%Y-%m-%dT%H:%M:%SZ')
+        #     query = json.dumps({"query": {"jsonmodel_type": "range_query", "field": "system_mtime", "from": last_export_datestring}})
+        #     url = f'/repositories/2/search?q=refid:{refid_value}&filter={query}&fields[]=json&page=1'
+        # else:
+        url = f'/repositories/2/search?q=refid:{refid_value}&fields[]=json&page=1'
         resp = self.aspace.client.get_paged(url)
         for r in resp:
             yield json.loads(r['json'])
