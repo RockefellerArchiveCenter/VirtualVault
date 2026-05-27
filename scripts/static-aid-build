@@ -5,6 +5,6 @@ set -e
 cd /code/
 
 static-aid-make-pages
-bundle exec jekyll build --incremental -d build/site -s build/staging
+bundle exec jekyll build -d build/site -s build/staging
 static-aid-link-assets
 node build/site/js/create-index.js
