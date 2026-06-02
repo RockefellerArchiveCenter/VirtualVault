@@ -43,7 +43,8 @@ class DataExtractor_ArchivesSpace(DataExtractor):
                         self.save_data_file(archival_object_id, obj,
                                             config.destinations[dir.name])
                 except Exception as e:
-                    logging.error(f"Error fetching data for existing refids: {e}")
+                    logging.error(f"Error fetching data for existing refids with object {obj}")
+                    logging.error(e)
 
             # Get all data for new refids
             for refid_chunk in self.list_chunks(new_refids):
@@ -79,7 +80,8 @@ class DataExtractor_ArchivesSpace(DataExtractor):
                                 self.save_data_file(
                                     container_id, container, config.destinations['containers'])
                     except Exception as e:
-                        logging.error(f"Error fetching data for new refids: {e}")
+                        logging.error(f"Error fetching data for new refids with object {obj}")
+                        logging.error(e)
 
     def get_refids_from_files(self, dir, last_export):
         refids = []
