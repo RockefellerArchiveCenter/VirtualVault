@@ -37,20 +37,23 @@ class DataExtractor_ArchivesSpace(DataExtractor):
             # Get updated data for existing refids
             for refid_chunk in self.list_chunks(refids):
                 updated_data = self.get_updated_data(refid_chunk, last_export)
-                for obj in updated_data:
-                    archival_object_id = obj['uri'].split("/")[-1]
-                    self.save_data_file(archival_object_id, obj,
-                                        config.destinations[dir.name])
+                try:
+                    for obj in updated_data:
+                        archival_object_id = obj['uri'].split("/")[-1]
+                        self.save_data_file(archival_object_id, obj,
+                                            config.destinations[dir.name])
+                except Exception as e:
+                    logging.error(f"Error fetching data for existing refids: {e}")
 
             # Get all data for new refids
             for refid_chunk in self.list_chunks(new_refids):
                 updated_data = self.get_updated_data(refid_chunk, 0)
                 for obj in updated_data:
-                    archival_object_id = obj['uri'].split("/")[-1]
-                    self.save_data_file(archival_object_id, obj,
-                                        config.destinations[dir.name])
+                    try:
+                        archival_object_id = obj['uri'].split("/")[-1]
+                        self.save_data_file(archival_object_id, obj,
+                                            config.destinations[dir.name])
 
-                    if obj['ref_id'] in new_refids:
                         resource_id = obj['resource']['ref'].split("/")[-1]
                         if not Path(config.destinations['collections'], f"{resource_id}.json").is_file():
                             resource = self.aspace.client.get(
@@ -75,6 +78,8 @@ class DataExtractor_ArchivesSpace(DataExtractor):
                                     container_uri).json()
                                 self.save_data_file(
                                     container_id, container, config.destinations['containers'])
+                    except Exception as e:
+                        logging.error(f"Error fetching data for new refids: {e}")
 
     def get_refids_from_files(self, dir, last_export):
         refids = []
