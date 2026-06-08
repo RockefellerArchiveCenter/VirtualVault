@@ -107,9 +107,9 @@ class DataExtractor_ArchivesSpace(DataExtractor):
             last_export_datetime = datetime.fromtimestamp(last_export)
             last_export_datestring = last_export_datetime.strftime('%Y-%m-%dT%H:%M:%SZ')
             query = json.dumps({"query": {"jsonmodel_type": "range_query", "field": "system_mtime", "from": last_export_datestring}})
-            url = f'/repositories/2/search?q=refid:{refid_value}&type=archival_object&filter={query}&fields[]=json&page=1'
+            url = f'/repositories/2/search?q=refid:{refid_value}&type[]=archival_object&filter={query}&fields[]=json&page=1'
         else:
-            url = f'/repositories/2/search?q=refid:{refid_value}&type=archival_object&fields[]=json&page=1'
+            url = f'/repositories/2/search?q=refid:{refid_value}&type[]=archival_object&fields[]=json&page=1'
         resp = self.aspace.client.get_paged(url)
         for r in resp:
             yield json.loads(r['json'])
