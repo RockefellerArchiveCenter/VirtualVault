@@ -1,49 +1,46 @@
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function() {
 
-  function displaySearchResults(results, query, category) {
-    $('#results').empty().hide();
+  function displaySearchResults(results, query) {
+    var resultsDiv = document.getElementById('results')
+    resultsDiv.innerHTML = "";
+    resultsDiv.style.display = "none";
     if (results.length) { // Are there any results?
       var appendString = '<table class="table table-striped"><tbody>'
 
-      $.getJSON("/"+searchType+"_search_data.json", function(documents){
+      $.getJSON(`/${searchType}_search_data.json`, function(documents){
         for (r in results) {  // Iterate over the results
           let item = documents[results[r].ref];
-          appendString += '<tr><td><p class="lead mb-1"><a href="'+item.url+'" onclick="ga(\'send\', \'event\', \''+category+'\', \'view\', \''+item.title+'\');">'+item.title+'</a> <small>'+item.avnumber+'</small></p><p class="text-muted mb-0">'+item.collection+'</p></td></tr>';
+          appendString += `<tr><td><p class="lead mb-1"><a href="${item.url}">${item.title}</a> <small>${item.avnumber}</small></p><p class="text-muted mb-0">${item.collection}</p></td></tr>`;
         }
         appendString += '</tbody></table>'
         $('#results').append(appendString);
       });
     }
-    $('#results').prepend('<p><span class="badge badge-secondary">'+results.length+'</span> result(s) for <span class="badge badge-secondary">'+query+'</span></p>').fadeIn(200);
+    $('#results').prepend(`<p><span class="badge badge-secondary">${results.length}</span> result(s) for <span class="badge badge-secondary">${query}</span></p>`).fadeIn(200);
   }
 
   function getQueryVariable(variable) {
-    let query = window.location.search.substring(1);
-    let vars = query.split('&');
+    const url = new URL(window.location);
 
-    for (var i = 0; i < vars.length; i++) {
-      let pair = vars[i].split('=');
+    if (typeof url != "object") {
+        return console.log("Cannot parse URL");
+    };
 
-      if (pair[0] === variable) {
-        return decodeURIComponent(pair[1].replace(/\+/g, '%20'));
-      }
-    }
+    return url.searchParams.get(variable);
   }
 
   let searchTerm = getQueryVariable('q');
-  let searchType = $('form').attr('action').substring(1);
+  let searchType = $('form').attr('action').replace(/\//g, '');
 
   if (searchTerm) {
     $('#results').empty().append('<img class="mx-auto d-block" src="/img/loading.gif" />')
     $('#query').attr("value", searchTerm);
 
-    _paq.push(['trackEvent', searchType, 'search', searchTerm]);
-
-    $.getJSON("/"+searchType+"_search_index.json", function(data){
+    $.getJSON(`/${searchType}_search_index.json`, function(data){
       let index = lunr.Index.load(data)
 
       let results = index.search(searchTerm); // Get lunr to perform a search
-      displaySearchResults(results, searchTerm, searchType);
+      displaySearchResults(results, searchTerm);
 
     });
 

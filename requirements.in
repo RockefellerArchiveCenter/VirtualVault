@@ -1,0 +1,4 @@
+ArchivesSnake~=0.10
+psutil~=7.0
+pytest~=8.2
+vcrpy~=7.0

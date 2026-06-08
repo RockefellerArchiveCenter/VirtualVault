@@ -2,14 +2,11 @@ window.onload = function() {
 
 	// asset
 	var asset = document.getElementById("asset");
-	var downloadButton = document.getElementById("download");
 
 	if(asset) {
 
 		// Asset data
-		var assetTitle = document.getElementById('asset-title').innerText.trim() || document.getElementById('asset-title').textContent.trim();
 		var assetSource = asset.children[0].getAttribute('src');
-		var assetType = assetSource.split('.').pop().toUpperCase();
 		// get and assign asset size and file type to HTML elements
 		var getAssetSize = $.ajax({
 			  type: "HEAD",
@@ -32,32 +29,5 @@ window.onload = function() {
 				return Math.max(fileSizeInBytes, 0.1).toFixed(1) + byteUnits[i];
 		};
 
-		asset.addEventListener('play', function(){
-			_paq.push(['trackEvent', assetType, 'play', assetTitle]);
-		});
-
-		asset.addEventListener('pause', function(){
-			_paq.push(['trackEvent', assetType, 'pause', assetTitle]);
-		});
-
-		asset.addEventListener('ended', function(){
-			_paq.push(['trackEvent', assetType, 'ended', assetTitle]);
-		});
-
-		downloadButton.addEventListener("mousedown", function() {
-			_paq.push(['trackEvent', assetType, 'download', assetTitle]);
-		});
-
-		window.addEventListener("fullscreenchange", function( event ) {
-			_paq.push(['trackEvent', assetType, 'full screen', assetTitle]);
-		});
-
-		window.addEventListener("webkitfullscreenchange", function( event ) {
-			_paq.push(['trackEvent', assetType, 'full screen', assetTitle]);
-		});
-
-		window.addEventListener("mozfullscreenchange", function( event ) {
-			_paq.push(['trackEvent', assetType, 'full screen', assetTitle]);
-		});
 	}
 }

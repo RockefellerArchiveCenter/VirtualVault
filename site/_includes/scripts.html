@@ -1,16 +1,16 @@
 <!-- JQuery -->
-<script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}/js/jquery-2.2.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
 <!-- Popper.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" crossorigin="anonymous"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" crossorigin="anonymous"></script> -->
 <!-- Bootstrap -->
-<script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}/js/bootstrap.min.js"></script>
+<!-- <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}/js/bootstrap.min.js"></script> -->
 <!-- Lunr.js for search -->
 <script type="text/javascript" src="//unpkg.com/lunr/lunr.js"></script>
-<script defer type="text/javascript" src="{{ site.url }}{{ site.baseurl }}/js/lunr-feed.js?3"></script>
+<script defer type="text/javascript" src="{{ site.url }}{{ site.baseurl }}/js/lunr-feed.js"></script>
 <!-- List.js for sorting titles on list pages -->
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.3.0/list.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
 <!-- Mediaelement for playing AV assets -->
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.5/mediaelement-and-player.min.js"></script>
+<script src="{{ site.url }}{{ site.baseurl }}/js/mediaelement/mediaelement-and-player.min.js"></script>
 <!-- custom AV events and google analytics -->
 <script type="text/javascript" src="{{ site.url }}{{ site.baseurl }}/js/av.js?2"></script>
 
@@ -24,4 +24,7 @@
     });
     $("#list .table").animate({opacity: 1}, 200);
   }
+  const player = new MediaElementPlayer('asset', {
+    iconSprite: '/js/mediaelement/mejs-controls.svg',
+  })
 </script>

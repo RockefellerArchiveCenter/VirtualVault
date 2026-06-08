@@ -1,0 +1,110 @@
+[DataExtractor]
+# dataSource can be one of ArchivesSpace, Adlib, Adlib-sampledata (case-insensitive)
+dataSource: archivesspace
+
+[ArchivesSpace]
+baseurl: http://sandbox.archivesspace.org/api
+repository: 2
+user: admin
+password: admin
+
+[Adlib]
+baseURL: http://whatever
+user:
+password:
+
+collectionDb: archive
+peopleDb: people
+institutionsDb: people
+
+collectionFilter:
+objectFilter:
+peopleFilter:
+institutionsFilter:
+
+[Destinations]
+breadcrumbs: breadcrumbs
+collections: collections
+families: agents/families
+objects: objects
+organizations: agents/corporate_entities
+people: agents/people
+software: agents/software
+subjects: subjects
+trees: trees
+audio: audio
+moving-image: moving-image
+catalogued-reports: catalogued-reports
+containers: containers
+
+[Assets]
+src: /assets
+dest: /code/build/site/assets
+
+[Logging]
+filename: static_aid.log
+level: INFO
+format: %(asctime)s %(message)s
+datefmt: %m/%d/%Y %I:%M:%S %p
+
+[LastExport]
+filepath: config/lastExport.pickle
+
+[Site]
+# Enter global values for your StaticAid site's JSON LD object here
+# Any variable not marked as REQUIRED can be commented out if not applicable
+
+# the function of your organization -- can currently be Library, Organization, or CollegeOrUniversity (case-sensitive) -- REQUIRED
+instytype:
+
+# a Wikidata, Freebase or other URI for your organization, if available
+instyid:
+
+# the commonly known name of your organization -- REQUIRED
+instyname:
+
+# your organization's URL -- REQUIRED
+instyurl:
+
+# an image of your organization or its logo -- REQUIRED
+instyimage:
+
+# your org's Wikipedia URL, or a social media URL, if available
+instysameas:
+
+# another name commonly used for your org, if available
+instyaltname:
+
+# your org's phone number, eg xxx-xxx-xxxx -- REQUIRED
+instyphone:
+
+# fields below collect your institution's address -- all are REQUIRED
+instystreetaddress:
+instycity:
+instystate:
+instyzipcode:
+
+# is your org a branch of another entity, or do you have a parent organization? If yes, enter Yes below -- not, comment out the line below -- REQUIRED
+parentOrg: Yes
+# if Yes, fill out the below fields for your parent org, similar to the ones above
+
+# parenttype can currently be Organization, Corporation, or CollegeOrUniversity (case-sensitive) -- REQUIRED
+parenttype:
+
+# parentid is a Wikidata, Freebase or other URI for your organization, if available
+parentid:
+
+# parentname is the commonly known name of your parent organization -- REQUIRED
+parentname:
+
+# parenturl is your parent organization's URL -- REQUIRED
+parenturl:
+
+# parentsameas is your org's Wikipedia URL, or a social media URL, if available
+parentsameas:
+
+# root URL for your website
+url:
+
+# website title
+title: Virtual Vault

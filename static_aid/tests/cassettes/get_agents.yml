@@ -1,0 +1,290 @@
+interactions:
+- request:
+    body: password=admin&expiring=False
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '29'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - ArchivesSnake/0.1
+    method: POST
+    uri: http://sandbox.archivesspace.org/api/users/admin/login
+  response:
+    body:
+      string: '{"session":"36ee9820f78fe1a57d53f35fe47250a60d1c46c03dc1561f52963c212131bf5d","user":{"lock_version":64,"username":"admin","name":"Administrator","is_system_user":true,"create_time":"2021-05-30T08:03:47Z","system_mtime":"2021-05-30T19:47:53Z","user_mtime":"2021-05-30T19:47:53Z","jsonmodel_type":"user","groups":[],"is_admin":true,"uri":"/users/1","agent_record":{"ref":"/agents/people/1"},"permissions":{"/repositories/1":["update_location_record","delete_vocabulary_record","update_subject_record","delete_subject_record","update_agent_record","delete_agent_record","update_vocabulary_record","update_enumeration_record","merge_subject_record","merge_agent_record","update_container_profile_record","update_location_profile_record","administer_system","become_user","cancel_importer_job","cancel_job","create_job","create_repository","delete_archival_record","delete_assessment_record","delete_classification_record","delete_event_record","delete_repository","import_records","index_system","manage_agent_record","manage_assessment_attributes","manage_container_profile_record","manage_container_record","manage_enumeration_record","manage_location_profile_record","manage_rde_templates","manage_repository","manage_subject_record","manage_users","manage_vocabulary_record","mediate_edits","merge_agents_and_subjects","merge_archival_record","suppress_archival_record","transfer_archival_record","transfer_repository","update_accession_record","update_assessment_record","update_classification_record","update_container_record","update_digital_object_record","update_event_record","update_resource_record","view_agent_contact_record","view_all_records","view_repository","view_suppressed"],"_archivesspace":["administer_system","become_user","cancel_importer_job","cancel_job","create_job","create_repository","delete_archival_record","delete_assessment_record","delete_classification_record","delete_event_record","delete_repository","import_records","index_system","manage_agent_record","manage_assessment_attributes","manage_container_profile_record","manage_container_record","manage_enumeration_record","manage_location_profile_record","manage_rde_templates","manage_repository","manage_subject_record","manage_users","manage_vocabulary_record","mediate_edits","merge_agents_and_subjects","merge_archival_record","suppress_archival_record","transfer_archival_record","transfer_repository","update_accession_record","update_assessment_record","update_classification_record","update_container_record","update_digital_object_record","update_event_record","update_resource_record","view_agent_contact_record","view_all_records","view_repository","view_suppressed","update_location_record","delete_vocabulary_record","update_subject_record","delete_subject_record","update_agent_record","delete_agent_record","update_vocabulary_record","update_enumeration_record","merge_subject_record","merge_agent_record","update_container_profile_record","update_location_profile_record"]}}}
+
+        '
+    headers:
+      Cache-Control:
+      - private, must-revalidate, max-age=0
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 30 May 2021 19:47:53 GMT
+      Server:
+      - nginx/1.13.12
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - ArchivesSnake/0.1
+    method: GET
+    uri: http://sandbox.archivesspace.org/api/version
+  response:
+    body:
+      string: ArchivesSpace (v3.0.0)
+    headers:
+      Cache-Control:
+      - private, must-revalidate, max-age=0
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '22'
+      Content-Type:
+      - text/html;charset=UTF-8
+      Date:
+      - Sun, 30 May 2021 19:47:53 GMT
+      Server:
+      - nginx/1.13.12
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - ArchivesSnake/0.1
+    method: GET
+    uri: http://sandbox.archivesspace.org/api/repositories/2
+  response:
+    body:
+      string: '{"lock_version":0,"repo_code":"sdb","name":"sdb test","org_code":"sal
+        s centr","parent_institution_name":"parent","created_by":"admin","last_modified_by":"admin","create_time":"2021-05-30T14:16:50Z","system_mtime":"2021-05-30T14:16:50Z","user_mtime":"2021-05-30T14:16:50Z","publish":true,"description":"test
+        description","oai_is_disabled":false,"oai_sets_available":"[\"888\",\"889\",\"890\",\"891\",\"892\",\"893\",\"894\",\"895\",\"896\",\"897\",\"898\"]","slug":"sdb","is_slug_auto":false,"country":"IT","jsonmodel_type":"repository","uri":"/repositories/2","display_string":"sdb
+        test (sdb)","agent_representation":{"ref":"/agents/corporate_entities/1"}}
+
+        '
+    headers:
+      Cache-Control:
+      - private, must-revalidate, max-age=0
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 30 May 2021 19:47:53 GMT
+      Server:
+      - nginx/1.13.12
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - ArchivesSnake/0.1
+    method: GET
+    uri: http://sandbox.archivesspace.org/api/agents/corporate_entities?page=1&page_size=100&with_params=all_ids&with_params=modified_since
+  response:
+    body:
+      string: '{"first_page":1,"last_page":1,"this_page":1,"total":1,"results":[{"lock_version":0,"publish":false,"created_by":"admin","last_modified_by":"admin","create_time":"2021-05-30T14:16:50Z","system_mtime":"2021-05-30T14:16:50Z","user_mtime":"2021-05-30T14:16:50Z","is_slug_auto":false,"jsonmodel_type":"agent_corporate_entity","agent_contacts":[{"lock_version":0,"name":"name
+        surname","address_1":"address 1","city":"rome","email":"test@test.tt","created_by":"admin","last_modified_by":"admin","create_time":"2021-05-30T14:16:50Z","system_mtime":"2021-05-30T14:16:50Z","user_mtime":"2021-05-30T14:16:50Z","jsonmodel_type":"agent_contact","telephones":[],"notes":[]}],"agent_record_controls":[],"agent_alternate_sets":[],"agent_conventions_declarations":[],"agent_other_agency_codes":[],"agent_maintenance_histories":[],"agent_record_identifiers":[],"agent_identifiers":[],"agent_sources":[],"agent_places":[],"agent_occupations":[],"agent_functions":[],"agent_topics":[],"agent_resources":[],"linked_agent_roles":[],"external_documents":[],"notes":[],"used_within_repositories":[],"used_within_published_repositories":[],"dates_of_existence":[],"used_languages":[],"names":[{"lock_version":0,"primary_name":"sdb
+        test","sort_name":"sdb test","sort_name_auto_generate":true,"created_by":"admin","last_modified_by":"admin","create_time":"2021-05-30T14:16:50Z","system_mtime":"2021-05-30T14:16:50Z","user_mtime":"2021-05-30T14:16:50Z","authorized":true,"is_display_name":true,"jurisdiction":false,"conference_meeting":false,"source":"local","jsonmodel_type":"name_corporate_entity","use_dates":[],"parallel_names":[]}],"related_agents":[],"uri":"/agents/corporate_entities/1","agent_type":"agent_corporate_entity","is_linked_to_published_record":false,"display_name":{"lock_version":0,"primary_name":"sdb
+        test","sort_name":"sdb test","sort_name_auto_generate":true,"created_by":"admin","last_modified_by":"admin","create_time":"2021-05-30T14:16:50Z","system_mtime":"2021-05-30T14:16:50Z","user_mtime":"2021-05-30T14:16:50Z","authorized":true,"is_display_name":true,"jurisdiction":false,"conference_meeting":false,"source":"local","jsonmodel_type":"name_corporate_entity","use_dates":[],"parallel_names":[]},"title":"sdb
+        test"}]}
+
+        '
+    headers:
+      Cache-Control:
+      - private, must-revalidate, max-age=0
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 30 May 2021 19:47:53 GMT
+      Server:
+      - nginx/1.13.12
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - ArchivesSnake/0.1
+    method: GET
+    uri: http://sandbox.archivesspace.org/api/agents/families?page=1&page_size=100&with_params=all_ids&with_params=modified_since
+  response:
+    body:
+      string: '{"first_page":1,"last_page":1,"this_page":1,"total":0,"results":[]}
+
+        '
+    headers:
+      Cache-Control:
+      - private, must-revalidate, max-age=0
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '68'
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 30 May 2021 19:47:53 GMT
+      Server:
+      - nginx/1.13.12
+      X-Content-Type-Options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - ArchivesSnake/0.1
+    method: GET
+    uri: http://sandbox.archivesspace.org/api/agents/people?page=1&page_size=100&with_params=all_ids&with_params=modified_since
+  response:
+    body:
+      string: '{"first_page":1,"last_page":1,"this_page":1,"total":1,"results":[{"lock_version":0,"publish":false,"create_time":"2021-05-30T08:03:47Z","system_mtime":"2021-05-30T08:03:47Z","user_mtime":"2021-05-30T08:03:47Z","is_slug_auto":true,"jsonmodel_type":"agent_person","agent_contacts":[],"agent_record_controls":[],"agent_alternate_sets":[],"agent_conventions_declarations":[],"agent_other_agency_codes":[],"agent_maintenance_histories":[],"agent_record_identifiers":[],"agent_identifiers":[],"agent_sources":[],"agent_places":[],"agent_occupations":[],"agent_functions":[],"agent_topics":[],"agent_resources":[],"linked_agent_roles":[],"external_documents":[],"notes":[],"used_within_repositories":["/repositories/1"],"used_within_published_repositories":[],"dates_of_existence":[],"used_languages":[],"names":[{"lock_version":0,"primary_name":"Administrator","sort_name":"Administrator","sort_name_auto_generate":true,"create_time":"2021-05-30T08:03:47Z","system_mtime":"2021-05-30T08:03:47Z","user_mtime":"2021-05-30T08:03:47Z","authorized":true,"is_display_name":true,"source":"local","rules":"local","name_order":"direct","jsonmodel_type":"name_person","use_dates":[],"parallel_names":[]}],"agent_genders":[],"related_agents":[],"uri":"/agents/people/1","agent_type":"agent_person","is_linked_to_published_record":false,"display_name":{"lock_version":0,"primary_name":"Administrator","sort_name":"Administrator","sort_name_auto_generate":true,"create_time":"2021-05-30T08:03:47Z","system_mtime":"2021-05-30T08:03:47Z","user_mtime":"2021-05-30T08:03:47Z","authorized":true,"is_display_name":true,"source":"local","rules":"local","name_order":"direct","jsonmodel_type":"name_person","use_dates":[],"parallel_names":[]},"title":"Administrator","is_user":"admin"}]}
+
+        '
+    headers:
+      Cache-Control:
+      - private, must-revalidate, max-age=0
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 30 May 2021 19:47:54 GMT
+      Server:
+      - nginx/1.13.12
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - ArchivesSnake/0.1
+    method: GET
+    uri: http://sandbox.archivesspace.org/api/agents/software?page=1&page_size=100&with_params=all_ids&with_params=modified_since
+  response:
+    body:
+      string: '{"first_page":1,"last_page":1,"this_page":1,"total":1,"results":[{"lock_version":0,"publish":false,"create_time":"2021-05-30T08:03:46Z","system_mtime":"2021-05-30T08:03:46Z","user_mtime":"2021-05-30T08:03:46Z","is_slug_auto":true,"jsonmodel_type":"agent_software","agent_contacts":[],"agent_record_controls":[],"agent_alternate_sets":[],"agent_conventions_declarations":[],"agent_other_agency_codes":[],"agent_maintenance_histories":[],"agent_record_identifiers":[],"agent_identifiers":[],"agent_sources":[],"agent_places":[],"agent_occupations":[],"agent_functions":[],"agent_topics":[],"agent_resources":[],"linked_agent_roles":[],"external_documents":[],"notes":[],"used_within_repositories":[],"used_within_published_repositories":[],"dates_of_existence":[],"used_languages":[],"names":[{"lock_version":0,"software_name":"ArchivesSpace","version":"v3.0.0","sort_name":"ArchivesSpace
+        v3.0.0","sort_name_auto_generate":true,"create_time":"2021-05-30T08:03:46Z","system_mtime":"2021-05-30T08:03:46Z","user_mtime":"2021-05-30T08:03:46Z","authorized":true,"is_display_name":true,"source":"local","rules":"local","jsonmodel_type":"name_software","use_dates":[],"parallel_names":[]}],"uri":"/agents/software/1","agent_type":"agent_software","is_linked_to_published_record":false,"display_name":{"lock_version":0,"software_name":"ArchivesSpace","version":"v3.0.0","sort_name":"ArchivesSpace
+        v3.0.0","sort_name_auto_generate":true,"create_time":"2021-05-30T08:03:46Z","system_mtime":"2021-05-30T08:03:46Z","user_mtime":"2021-05-30T08:03:46Z","authorized":true,"is_display_name":true,"source":"local","rules":"local","jsonmodel_type":"name_software","use_dates":[],"parallel_names":[]},"title":"ArchivesSpace
+        v3.0.0"}]}
+
+        '
+    headers:
+      Cache-Control:
+      - private, must-revalidate, max-age=0
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 30 May 2021 19:47:54 GMT
+      Server:
+      - nginx/1.13.12
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+version: 1

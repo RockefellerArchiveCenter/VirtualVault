@@ -1,0 +1,14 @@
+services:
+  staticaid:
+    build: .
+    entrypoint: /code/entrypoint.sh
+    volumes:
+      - ./assets:/assets
+      - ./config:/code/config
+      - ./data:/code/build/data
+    ports:
+      - '4000:4000'
+    environment:
+      - AS_USERNAME=admin 
+      - AS_PASSWORD=admin
+      - AS_BASEURL=https://sandbox.archivesspace.org/api
